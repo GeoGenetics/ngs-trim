@@ -1,0 +1,46 @@
+$schema: "http://json-schema.org/draft-07/schema#"
+
+description: aeDNA Trimming configuration file
+
+type: object
+properties:
+
+  samples:
+    type: string
+
+  units:
+    type: string
+
+  reads:
+    type: object
+    properties:
+      trim:
+        type: object
+        properties:
+          activate:
+            type: boolean
+          tool:
+            type: string
+            enum: ["adapterremoval", "bbduk", "cutadapt", "fastp", "trimmomatic"]
+          params:
+            type: string
+        required:
+          - activate
+          - tool
+          - params
+
+      collapse:
+        type: object
+        properties:
+          activate:
+            type: boolean
+          params:
+            type: string
+        required:
+          - activate
+          - params
+
+required:
+  - samples
+  - units
+  - reads
