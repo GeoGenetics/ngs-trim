@@ -65,7 +65,7 @@ rule fastqc_raw:
     threads: 2
     resources:
         # Memory is hard-coded to 250M per thread (https://github.com/bcbio/bcbio-nextgen/issues/2989)
-        mem = lambda w, threads: f"{500 * threads} MiB",
+        mem = lambda w, threads: f"{500 * threads} MB",
         runtime = lambda w, attempt: f"{30 * attempt} m",
     wrapper:
         wrapper_ver + "/bio/fastqc"

@@ -34,7 +34,7 @@ rule multiqc:
     localrule: True
     threads: 1
     resources:
-        mem = lambda w, attempt: f"{10 * attempt} GiB",
+        mem = lambda w, attempt: f"{10 * attempt} GB",
         runtime = lambda w, attempt: f"{30 * attempt} m",
     wrapper:
         wrapper_ver + "/bio/multiqc"

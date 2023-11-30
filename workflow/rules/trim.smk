@@ -56,7 +56,7 @@ rule cutadapt_fastq_pe:
     priority: 10
     threads: 20
     resources:
-        mem = lambda w, attempt: f"{15 * attempt} GiB",
+        mem = lambda w, attempt: f"{15 * attempt} GB",
         runtime = lambda w, attempt: f"{5 * attempt} h",
     wrapper:
         wrapper_ver + "/bio/cutadapt/pe"
@@ -76,7 +76,7 @@ rule cutadapt_fastq_se:
     priority: 10
     threads: 20
     resources:
-        mem = lambda w, attempt: f"{15 * attempt} GiB",
+        mem = lambda w, attempt: f"{15 * attempt} GB",
         runtime = lambda w, attempt: f"{5 * attempt} h",
     wrapper:
         wrapper_ver + "/bio/cutadapt/se"
@@ -106,7 +106,7 @@ rule adapterremoval_fastq_pe:
     priority: 10
     threads: 10
     resources:
-        mem = lambda w, attempt: f"{15 * attempt} GiB",
+        mem = lambda w, attempt: f"{15 * attempt} GB",
         runtime = lambda w, attempt: f"{2 * attempt} h",
     wrapper:
         wrapper_ver + "/bio/adapterremoval"
@@ -127,7 +127,7 @@ rule adapterremoval_fastq_se:
     priority: 10
     threads: 10
     resources:
-        mem = lambda w, attempt: f"{15 * attempt} GiB",
+        mem = lambda w, attempt: f"{15 * attempt} GB",
         runtime = lambda w, attempt: f"{2 * attempt} h",
     wrapper:
         wrapper_ver + "/bio/adapterremoval"
@@ -153,7 +153,7 @@ rule fastp_fastq_pe:
     priority: 10
     threads: 10
     resources:
-        mem = lambda w, attempt: f"{30 * attempt} GiB",
+        mem = lambda w, attempt: f"{30 * attempt} GB",
         runtime = lambda w, attempt: f"{30 * attempt} m",
     wrapper:
         wrapper_ver + "/bio/fastp"
@@ -175,7 +175,7 @@ rule fastp_fastq_se:
     priority: 10
     threads: 10
     resources:
-        mem = lambda w, attempt: f"{30 * attempt} GiB",
+        mem = lambda w, attempt: f"{30 * attempt} GB",
         runtime = lambda w, attempt: f"{30 * attempt} m",
     wrapper:
         wrapper_ver + "/bio/fastp"
@@ -202,7 +202,7 @@ rule trimmomatic_fastq_pe:
     priority: 10
     threads: 20
     resources:
-        mem = lambda w, attempt: f"{15 * attempt} GiB",
+        mem = lambda w, attempt: f"{15 * attempt} GB",
         runtime = lambda w, attempt: f"{2 * attempt} h",
     wrapper:
         wrapper_ver + "/bio/trimmomatic/pe"
@@ -224,7 +224,7 @@ rule trimmomatic_fastq_se:
     priority: 10
     threads: 20
     resources:
-        mem = lambda w, attempt: f"{15 * attempt} GiB",
+        mem = lambda w, attempt: f"{15 * attempt} GB",
         runtime = lambda w, attempt: f"{2 * attempt} h",
     wrapper:
         wrapper_ver + "/bio/trimmomatic/se"
@@ -248,7 +248,7 @@ rule bbduk_fastq_pe:
     priority: 10
     threads: 10
     resources:
-        mem = lambda w, attempt: f"{20 * attempt} GiB",
+        mem = lambda w, attempt: f"{20 * attempt} GB",
         runtime = lambda w, attempt: f"{30 * attempt} m",
     wrapper:
         wrapper_ver + "/bio/bbtools/bbduk"
@@ -269,7 +269,7 @@ rule bbduk_fastq_se:
     priority: 10
     threads: 10
     resources:
-        mem = lambda w, attempt: f"{20 * attempt} GiB",
+        mem = lambda w, attempt: f"{20 * attempt} GB",
         runtime = lambda w, attempt: f"{30 * attempt} m",
     wrapper:
         wrapper_ver + "/bio/bbtools/bbduk"
