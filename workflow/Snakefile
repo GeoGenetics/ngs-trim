@@ -3,7 +3,7 @@ from snakemake.utils import min_version
 min_version("7.25.0")
 
 # Define wrapper versions
-wrapper_ver = "v3.0.2"
+wrapper_ver = "v3.3.2"
 
 include: "rules/utils.smk"
 include: "rules/setup.smk"
