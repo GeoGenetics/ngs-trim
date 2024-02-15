@@ -40,7 +40,20 @@ properties:
           - activate
           - params
 
+    required:
+      - trim
+      - collapse
+
+  report:
+    type: object
+    properties:
+      multiqc:
+        type: string
+    required:
+      - multiqc
+
 required:
   - samples
   - units
   - reads
+  - report
