@@ -3,7 +3,7 @@ from snakemake.utils import min_version
 min_version("7.25.0")
 
 # Define wrapper versions
-wrapper_ver = "v3.3.2"
+wrapper_ver = "v3.3.6"
 
 include: "rules/utils.smk"
 include: "rules/setup.smk"
@@ -20,8 +20,8 @@ rule multiqc:
         ### FastQC raw
         expand_pandas(get_rule_stats("fastqc_raw"), units[~is_units_align(units)]),
         ### Trimming
-        expand_pandas(get_rule_stats("{trimmer}_fastq_pe".format(trimmer=config["reads"]["trim"]["tool"])), units[~is_units_align(units) & units.type.eq("pe")]) if is_activated("reads/trim") else [],
-        expand_pandas(get_rule_stats("{trimmer}_fastq_se".format(trimmer=config["reads"]["trim"]["tool"])), units[~is_units_align(units) & units.type.eq("se")]) if is_activated("reads/trim") else [],
+        expand_pandas(get_rule_stats("{trimmer}_fastq_pe".format(trimmer=config["reads"]["trim"]["tool"])), units[~is_units_align(units) & units.seq_type.eq("pe")]) if is_activated("reads/trim") else [],
+        expand_pandas(get_rule_stats("{trimmer}_fastq_se".format(trimmer=config["reads"]["trim"]["tool"])), units[~is_units_align(units) & units.seq_type.eq("se")]) if is_activated("reads/trim") else [],
         ### FastqQC trimmed
         expand_pandas(get_rule_stats("fastqc_trim"), units[~is_units_align(units)]) if is_activated("reads/trim") else [],
     output:
@@ -31,10 +31,12 @@ rule multiqc:
         "logs/reports/multiqc.log"
     benchmark:
         "benchmarks/reports/multiqc.log"
+    params:
+        extra = "--force " + check_cmd(config["report"]["multiqc"], forbidden_args = ["-n", "--filename", "-o", "--outdir", "--data-dir", "--no-data-dir", "-z", "--zip-data-dir", "--no-report", "--pdf", "--version", "-h", "--help"]),
     localrule: True
     threads: 1
     resources:
-        mem = lambda w, attempt: f"{10 * attempt} GB",
+        mem = lambda w, attempt: f"{10 * attempt} GiB",
         runtime = lambda w, attempt: f"{30 * attempt} m",
     wrapper:
         wrapper_ver + "/bio/multiqc"
