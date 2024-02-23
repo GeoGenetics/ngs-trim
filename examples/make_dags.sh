@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SNAKEMAKE_OPTS="--snakefile ../../workflow/Snakefile --configfile config/config.yaml --use-conda --conda-prefix /tmp/cache/conda $@"
+SNAKEMAKE_OPTS="--snakefile ../../workflow/Snakefile --configfile config/config.yaml --printshellcmds --use-conda --conda-prefix /tmp/cache/conda $@"
 
 for TEST in robot_tests
 do

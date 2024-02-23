@@ -1,6 +1,5 @@
 import gzip
-from snakemake.utils import min_version
-min_version("7.25.0")
+snakemake.utils.min_version("7.25.0")
 
 # Define wrapper versions
 wrapper_ver = "v3.3.6"
