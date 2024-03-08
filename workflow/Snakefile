@@ -2,7 +2,7 @@ import gzip
 snakemake.utils.min_version("7.25.0")
 
 # Define wrapper versions
-wrapper_ver = "v3.3.6"
+wrapper_ver = "v3.4.1"
 
 include: "rules/utils.smk"
 include: "rules/setup.smk"
@@ -43,7 +43,7 @@ rule multiqc:
 rule all:
     input:
         qc = rules.multiqc.output.html,
-        res = expand_pandas(get_fastqs_trimmed(), units),
+        res = expand_pandas("results/reads/trim/{sample}_{library}_{lane}_{read_type_trim}.fastq.gz", units),
     message:
         "Read trimming finished successfully!"
     default_target: True

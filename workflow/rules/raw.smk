@@ -32,7 +32,7 @@ rule get_fastq_raw:
     input:
         _get_input
     output:
-        temp("temp/reads/{sample}_{library}_{lane}_{read_type_raw}.fastq.gz"),
+        temp("temp/reads/raw/{sample}_{library}_{lane}_{read_type_raw}.fastq.gz"),
     localrule: True
     threads: 1
     run:
