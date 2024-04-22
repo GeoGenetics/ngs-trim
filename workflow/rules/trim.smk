@@ -105,9 +105,7 @@ elif config["reads"]["trim"]["tool"] == "adapterremoval":
         wrapper:
             wrapper_ver + "/bio/adapterremoval"
 
-    rule adapterremoval_fastq_se:
-        input:
-            sample = lambda w: expand(rules.get_fastq_raw.output, read_type_raw = get_read_type_raw(w.sample, w.library, w.lane), allow_missing=True),
+    use rule adapterremoval_fastq_pe as adapterremoval_fastq_se with:
         output:
             fq = "results/reads/trim/{sample}_{library}_{lane}_R.fastq.gz",
             discarded = "results/reads/trim/{sample}_{library}_{lane}_discarded.fastq.gz",
@@ -118,13 +116,6 @@ elif config["reads"]["trim"]["tool"] == "adapterremoval":
             "benchmarks/reads/trim/{sample}_{library}_{lane}_se.tsv"
         params:
             extra = lambda w: check_cmd(config["reads"]["trim"]["params"], forbidden_args=["--adapter1", "--adapter2"]) + (" --adapter1 {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
-        priority: 10
-        threads: 10
-        resources:
-            mem = lambda w, attempt: f"{15 * attempt} GiB",
-            runtime = lambda w, attempt: f"{2 * attempt} h",
-        wrapper:
-            wrapper_ver + "/bio/adapterremoval"
 
 
 
@@ -148,14 +139,12 @@ elif config["reads"]["trim"]["tool"] == "fastp":
         priority: 10
         threads: 10
         resources:
-            mem = lambda w, attempt: f"{30 * attempt} GiB",
+            mem = lambda w, attempt: f"{20 * attempt} GiB",
             runtime = lambda w, attempt: f"{30 * attempt} m",
         wrapper:
             wrapper_ver + "/bio/fastp"
 
-    rule fastp_fastq_se:
-        input:
-            sample = lambda w: expand(rules.get_fastq_raw.output, read_type_raw = get_read_type_raw(w.sample, w.library, w.lane), allow_missing=True),
+    use rule fastp_fastq_pe as fastp_fastq_se with:
         output:
             trimmed = "results/reads/trim/{sample}_{library}_{lane}_R.fastq.gz",
             failed = "results/reads/trim/{sample}_{library}_{lane}_discarded.fastq.gz",
@@ -167,13 +156,6 @@ elif config["reads"]["trim"]["tool"] == "fastp":
             "benchmarks/reads/trim/{sample}_{library}_{lane}_se.tsv"
         params:
             extra = lambda w: check_cmd(config["reads"]["trim"]["params"], forbidden_args = ["--adapter_sequence", "--adapter_sequence_r2"]) + (" --adapter_sequence {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
-        priority: 10
-        threads: 10
-        resources:
-            mem = lambda w, attempt: f"{30 * attempt} GiB",
-            runtime = lambda w, attempt: f"{30 * attempt} m",
-        wrapper:
-            wrapper_ver + "/bio/fastp"
 
 
 
@@ -250,9 +232,7 @@ elif config["reads"]["trim"]["tool"] == "bbduk":
         wrapper:
             wrapper_ver + "/bio/bbtools/bbduk"
 
-    rule bbduk_fastq_se:
-        input:
-            sample = lambda w: expand(rules.get_fastq_raw.output, read_type_raw = get_read_type_raw(w.sample, w.library, w.lane), allow_missing=True),
+    use rule bbduk_fastq_pe as bbduk_fastq_se with:
         output:
             trimmed = "results/reads/trim/{sample}_{library}_{lane}_R.fastq.gz",
             discarded = "results/reads/trim/{sample}_{library}_{lane}_discarded.fastq.gz",
@@ -263,13 +243,6 @@ elif config["reads"]["trim"]["tool"] == "bbduk":
             "benchmarks/reads/trim/{sample}_{library}_{lane}_se.tsv"
         params:
             extra = lambda w: check_cmd(config["reads"]["trim"]["params"], forbidden_args=["literal"]) + (" literal={} ".format(*get_adapters(w)) if get_adapters(w) else " "),
-        priority: 10
-        threads: 10
-        resources:
-            mem = lambda w, attempt: f"{20 * attempt} GiB",
-            runtime = lambda w, attempt: f"{30 * attempt} m",
-        wrapper:
-            wrapper_ver + "/bio/bbtools/bbduk"
 
 
 
