@@ -36,6 +36,7 @@ rule get_fastq_raw:
     localrule: True
     threads: 1
     run:
+        import gzip
         src = Path(input[0])
         dst = Path(output[0])
         if src.suffix != ".gz":
@@ -60,7 +61,7 @@ rule fastqc_raw:
     log:
         "logs/reads/fastqc_raw/{sample}_{library}_{lane}_{read_type_raw}.log"
     benchmark:
-        "benchmarks/reads/fastqc_raw/{sample}_{library}_{lane}_{read_type_raw}.tsv"
+        "benchmarks/reads/fastqc_raw/{sample}_{library}_{lane}_{read_type_raw}.jsonl"
     params: ""
     threads: 2
     resources:

@@ -1,8 +1,7 @@
-import gzip
-snakemake.utils.min_version("7.25.0")
+snakemake.utils.min_version("8.11.0")
 
 # Define wrapper versions
-wrapper_ver = "v3.8.0"
+wrapper_ver = "v3.9.0"
 
 include: "rules/utils.smk"
 include: "rules/setup.smk"

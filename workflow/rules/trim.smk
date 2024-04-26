@@ -43,7 +43,7 @@ if config["reads"]["trim"]["tool"] == "cutadapt":
         log:
             "logs/reads/trim/{sample}_{library}_{lane}_pe.log"
         benchmark:
-            "benchmarks/reads/trim/{sample}_{library}_{lane}_pe.tsv"
+            "benchmarks/reads/trim/{sample}_{library}_{lane}_pe.jsonl"
         params:
             extra = lambda w: check_cmd(config["reads"]["trim"]["params"], forbidden_args = ["--version", "-j", "--cores", "-a", "-A", "-o", "-p"]) + (" -a {} -A {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
         priority: 10
@@ -63,7 +63,7 @@ if config["reads"]["trim"]["tool"] == "cutadapt":
         log:
             "logs/reads/trim/{sample}_{library}_{lane}_se.log"
         benchmark:
-            "benchmarks/reads/trim/{sample}_{library}_{lane}_se.tsv"
+            "benchmarks/reads/trim/{sample}_{library}_{lane}_se.jsonl"
         params:
             extra = lambda w: check_cmd(config["reads"]["trim"]["params"], forbidden_args = ["--version", "-j", "--cores", "-a", "-A", "-o", "-p"]) + (" -a {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
         priority: 10
@@ -94,7 +94,7 @@ elif config["reads"]["trim"]["tool"] == "adapterremoval":
         log:
             "logs/reads/trim/{sample}_{library}_{lane}_pe.log"
         benchmark:
-            "benchmarks/reads/trim/{sample}_{library}_{lane}_pe.tsv"
+            "benchmarks/reads/trim/{sample}_{library}_{lane}_pe.jsonl"
         params:
             extra = lambda w: check_cmd(config["reads"]["trim"]["params"], forbidden_args=["--adapter1", "--adapter2"]) + (" --adapter1 {} --adapter2 {} ".format(*get_adapters(w)) if get_adapters(w) else " ") + (config["reads"]["collapse"]["params"] if is_activated("reads/collapse") else " "),
         priority: 10
@@ -113,7 +113,7 @@ elif config["reads"]["trim"]["tool"] == "adapterremoval":
         log:
             "logs/reads/trim/{sample}_{library}_{lane}_se.log"
         benchmark:
-            "benchmarks/reads/trim/{sample}_{library}_{lane}_se.tsv"
+            "benchmarks/reads/trim/{sample}_{library}_{lane}_se.jsonl"
         params:
             extra = lambda w: check_cmd(config["reads"]["trim"]["params"], forbidden_args=["--adapter1", "--adapter2"]) + (" --adapter1 {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
 
@@ -133,7 +133,7 @@ elif config["reads"]["trim"]["tool"] == "fastp":
         log:
             "logs/reads/trim/{sample}_{library}_{lane}_pe.log"
         benchmark:
-            "benchmarks/reads/trim/{sample}_{library}_{lane}_pe.tsv"
+            "benchmarks/reads/trim/{sample}_{library}_{lane}_pe.jsonl"
         params:
             extra = lambda w: check_cmd(config["reads"]["trim"]["params"], forbidden_args = ["--adapter_sequence", "--adapter_sequence_r2"]) + (" --adapter_sequence {} --adapter_sequence_r2 {} ".format(*get_adapters(w)) if get_adapters(w) else " ") + (config["reads"]["collapse"]["params"] if is_activated("reads/collapse") else " "),
         priority: 10
@@ -153,7 +153,7 @@ elif config["reads"]["trim"]["tool"] == "fastp":
         log:
             "logs/reads/trim/{sample}_{library}_{lane}_se.log"
         benchmark:
-            "benchmarks/reads/trim/{sample}_{library}_{lane}_se.tsv"
+            "benchmarks/reads/trim/{sample}_{library}_{lane}_se.jsonl"
         params:
             extra = lambda w: check_cmd(config["reads"]["trim"]["params"], forbidden_args = ["--adapter_sequence", "--adapter_sequence_r2"]) + (" --adapter_sequence {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
 
@@ -173,7 +173,7 @@ elif config["reads"]["trim"]["tool"] == "trimmomatic":
         log:
             "logs/reads/trim/{sample}_{library}_{lane}_pe.log"
         benchmark:
-            "benchmarks/reads/trim/{sample}_{library}_{lane}_pe.tsv"
+            "benchmarks/reads/trim/{sample}_{library}_{lane}_pe.jsonl"
         params:
             extra = lambda w, output: f"-trimlog {output.trim_log}",
             trimmer = lambda w, input: [config["reads"]["trim"]["params"].format(ADAPTER_FASTA = input.adapt)],
@@ -195,7 +195,7 @@ elif config["reads"]["trim"]["tool"] == "trimmomatic":
         log:
             "logs/reads/trim/{sample}_{library}_{lane}_se.log"
         benchmark:
-            "benchmarks/reads/trim/{sample}_{library}_{lane}_se.tsv"
+            "benchmarks/reads/trim/{sample}_{library}_{lane}_se.jsonl"
         params:
             extra = lambda w, output: f"-trimlog {output.trim_log}",
             trimmer = lambda w, input: [config["reads"]["trim"]["params"].format(ADAPTER_FASTA = input.adapt)],
@@ -221,7 +221,7 @@ elif config["reads"]["trim"]["tool"] == "bbduk":
         log:
             "logs/reads/trim/{sample}_{library}_{lane}_pe.log"
         benchmark:
-            "benchmarks/reads/trim/{sample}_{library}_{lane}_pe.tsv"
+            "benchmarks/reads/trim/{sample}_{library}_{lane}_pe.jsonl"
         params:
             extra = lambda w: check_cmd(config["reads"]["trim"]["params"], forbidden_args=["literal"]) + (" literal={},{} ".format(*get_adapters(w)) if get_adapters(w) else " "),
         priority: 10
@@ -240,7 +240,7 @@ elif config["reads"]["trim"]["tool"] == "bbduk":
         log:
             "logs/reads/trim/{sample}_{library}_{lane}_se.log"
         benchmark:
-            "benchmarks/reads/trim/{sample}_{library}_{lane}_se.tsv"
+            "benchmarks/reads/trim/{sample}_{library}_{lane}_se.jsonl"
         params:
             extra = lambda w: check_cmd(config["reads"]["trim"]["params"], forbidden_args=["literal"]) + (" literal={} ".format(*get_adapters(w)) if get_adapters(w) else " "),
 
@@ -259,4 +259,4 @@ use rule fastqc_raw as fastqc_trim with:
     log:
         "logs/reads/fastqc_trim/{sample}_{library}_{lane}_{read_type_trim}.log"
     benchmark:
-        "benchmarks/reads/fastqc_trim/{sample}_{library}_{lane}_{read_type_trim}.tsv"
+        "benchmarks/reads/fastqc_trim/{sample}_{library}_{lane}_{read_type_trim}.jsonl"
