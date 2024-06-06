@@ -37,7 +37,7 @@ rule multiqc:
         mem = lambda w, attempt: f"{10 * attempt} GiB",
         runtime = lambda w, attempt: f"{30 * attempt} m",
     wrapper:
-        wrapper_ver + "/bio/multiqc"
+        f"{wrapper_ver}/bio/multiqc"
 
 rule all:
     input:

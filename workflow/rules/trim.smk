@@ -52,7 +52,7 @@ if config["reads"]["trim"]["tool"] == "cutadapt":
             mem = lambda w, attempt: f"{15 * attempt} GiB",
             runtime = lambda w, attempt: f"{5 * attempt} h",
         wrapper:
-            wrapper_ver + "/bio/cutadapt/pe"
+            f"{wrapper_ver}/bio/cutadapt/pe"
 
     rule cutadapt_fastq_se:
         input:
@@ -72,7 +72,7 @@ if config["reads"]["trim"]["tool"] == "cutadapt":
             mem = lambda w, attempt: f"{15 * attempt} GiB",
             runtime = lambda w, attempt: f"{5 * attempt} h",
         wrapper:
-            wrapper_ver + "/bio/cutadapt/se"
+            f"{wrapper_ver}/bio/cutadapt/se"
 
 
 
@@ -103,7 +103,7 @@ elif config["reads"]["trim"]["tool"] == "adapterremoval":
             mem = lambda w, attempt: f"{15 * attempt} GiB",
             runtime = lambda w, attempt: f"{2 * attempt} h",
         wrapper:
-            wrapper_ver + "/bio/adapterremoval"
+            f"{wrapper_ver}/bio/adapterremoval"
 
     use rule adapterremoval_fastq_pe as adapterremoval_fastq_se with:
         output:
@@ -142,7 +142,7 @@ elif config["reads"]["trim"]["tool"] == "fastp":
             mem = lambda w, attempt: f"{20 * attempt} GiB",
             runtime = lambda w, attempt: f"{30 * attempt} m",
         wrapper:
-            wrapper_ver + "/bio/fastp"
+            f"{wrapper_ver}/bio/fastp"
 
     use rule fastp_fastq_pe as fastp_fastq_se with:
         output:
@@ -183,7 +183,7 @@ elif config["reads"]["trim"]["tool"] == "trimmomatic":
             mem = lambda w, attempt: f"{15 * attempt} GiB",
             runtime = lambda w, attempt: f"{2 * attempt} h",
         wrapper:
-            wrapper_ver + "/bio/trimmomatic/pe"
+            f"{wrapper_ver}/bio/trimmomatic/pe"
 
     rule trimmomatic_fastq_se:
         input:
@@ -205,7 +205,7 @@ elif config["reads"]["trim"]["tool"] == "trimmomatic":
             mem = lambda w, attempt: f"{15 * attempt} GiB",
             runtime = lambda w, attempt: f"{2 * attempt} h",
         wrapper:
-            wrapper_ver + "/bio/trimmomatic/se"
+            f"{wrapper_ver}/bio/trimmomatic/se"
 
 
 
@@ -230,7 +230,7 @@ elif config["reads"]["trim"]["tool"] == "bbduk":
             mem = lambda w, attempt: f"{20 * attempt} GiB",
             runtime = lambda w, attempt: f"{30 * attempt} m",
         wrapper:
-            wrapper_ver + "/bio/bbtools/bbduk"
+            f"{wrapper_ver}/bio/bbtools/bbduk"
 
     use rule bbduk_fastq_pe as bbduk_fastq_se with:
         output:
