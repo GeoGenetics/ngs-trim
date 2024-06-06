@@ -24,6 +24,7 @@ properties:
             enum: ["adapterremoval", "bbduk", "cutadapt", "fastp", "trimmomatic"]
           params:
             type: string
+            pattern: "^((?!\b--?(version|-j|cores|a|A|o|p|adapter1|adapter2|adapter_sequence|adapter_sequence_r2|in|in1|in2|ref|out|out1|out2|outm|outs|literal)[ =]).)*$"
         required:
           - activate
           - tool

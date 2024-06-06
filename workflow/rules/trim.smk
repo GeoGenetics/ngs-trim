@@ -45,7 +45,7 @@ if config["reads"]["trim"]["tool"] == "cutadapt":
         benchmark:
             "benchmarks/reads/trim/{sample}_{library}_{lane}_pe.jsonl"
         params:
-            extra = lambda w: check_cmd(config["reads"]["trim"]["params"], forbidden_args = ["--version", "-j", "--cores", "-a", "-A", "-o", "-p"]) + (" -a {} -A {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
+            extra = lambda w: config["reads"]["trim"]["params"] + (" -a {} -A {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
         priority: 10
         threads: 20
         resources:
@@ -65,7 +65,7 @@ if config["reads"]["trim"]["tool"] == "cutadapt":
         benchmark:
             "benchmarks/reads/trim/{sample}_{library}_{lane}_se.jsonl"
         params:
-            extra = lambda w: check_cmd(config["reads"]["trim"]["params"], forbidden_args = ["--version", "-j", "--cores", "-a", "-A", "-o", "-p"]) + (" -a {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
+            extra = lambda w: config["reads"]["trim"]["params"] + (" -a {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
         priority: 10
         threads: 20
         resources:
@@ -96,7 +96,7 @@ elif config["reads"]["trim"]["tool"] == "adapterremoval":
         benchmark:
             "benchmarks/reads/trim/{sample}_{library}_{lane}_pe.jsonl"
         params:
-            extra = lambda w: check_cmd(config["reads"]["trim"]["params"], forbidden_args=["--adapter1", "--adapter2"]) + (" --adapter1 {} --adapter2 {} ".format(*get_adapters(w)) if get_adapters(w) else " ") + (config["reads"]["collapse"]["params"] if is_activated("reads/collapse") else " "),
+            extra = lambda w: config["reads"]["trim"]["params"] + (" --adapter1 {} --adapter2 {} ".format(*get_adapters(w)) if get_adapters(w) else " ") + (config["reads"]["collapse"]["params"] if is_activated("reads/collapse") else " "),
         priority: 10
         threads: 10
         resources:
@@ -115,7 +115,7 @@ elif config["reads"]["trim"]["tool"] == "adapterremoval":
         benchmark:
             "benchmarks/reads/trim/{sample}_{library}_{lane}_se.jsonl"
         params:
-            extra = lambda w: check_cmd(config["reads"]["trim"]["params"], forbidden_args=["--adapter1", "--adapter2"]) + (" --adapter1 {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
+            extra = lambda w: config["reads"]["trim"]["params"] + (" --adapter1 {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
 
 
 
@@ -135,7 +135,7 @@ elif config["reads"]["trim"]["tool"] == "fastp":
         benchmark:
             "benchmarks/reads/trim/{sample}_{library}_{lane}_pe.jsonl"
         params:
-            extra = lambda w: check_cmd(config["reads"]["trim"]["params"], forbidden_args = ["--adapter_sequence", "--adapter_sequence_r2"]) + (" --adapter_sequence {} --adapter_sequence_r2 {} ".format(*get_adapters(w)) if get_adapters(w) else " ") + (config["reads"]["collapse"]["params"] if is_activated("reads/collapse") else " "),
+            extra = lambda w: config["reads"]["trim"]["params"] + (" --adapter_sequence {} --adapter_sequence_r2 {} ".format(*get_adapters(w)) if get_adapters(w) else " ") + (config["reads"]["collapse"]["params"] if is_activated("reads/collapse") else " "),
         priority: 10
         threads: 10
         resources:
@@ -155,7 +155,7 @@ elif config["reads"]["trim"]["tool"] == "fastp":
         benchmark:
             "benchmarks/reads/trim/{sample}_{library}_{lane}_se.jsonl"
         params:
-            extra = lambda w: check_cmd(config["reads"]["trim"]["params"], forbidden_args = ["--adapter_sequence", "--adapter_sequence_r2"]) + (" --adapter_sequence {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
+            extra = lambda w: config["reads"]["trim"]["params"] + (" --adapter_sequence {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
 
 
 
@@ -223,7 +223,7 @@ elif config["reads"]["trim"]["tool"] == "bbduk":
         benchmark:
             "benchmarks/reads/trim/{sample}_{library}_{lane}_pe.jsonl"
         params:
-            extra = lambda w: check_cmd(config["reads"]["trim"]["params"], forbidden_args=["literal"]) + (" literal={},{} ".format(*get_adapters(w)) if get_adapters(w) else " "),
+            extra = lambda w: config["reads"]["trim"]["params"] + (" literal={},{} ".format(*get_adapters(w)) if get_adapters(w) else " "),
         priority: 10
         threads: 10
         resources:
@@ -242,7 +242,7 @@ elif config["reads"]["trim"]["tool"] == "bbduk":
         benchmark:
             "benchmarks/reads/trim/{sample}_{library}_{lane}_se.jsonl"
         params:
-            extra = lambda w: check_cmd(config["reads"]["trim"]["params"], forbidden_args=["literal"]) + (" literal={} ".format(*get_adapters(w)) if get_adapters(w) else " "),
+            extra = lambda w: config["reads"]["trim"]["params"] + (" literal={} ".format(*get_adapters(w)) if get_adapters(w) else " "),
 
 
 
