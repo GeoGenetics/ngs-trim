@@ -50,6 +50,7 @@ properties:
     properties:
       multiqc:
         type: string
+        pattern: "^((?!\b--?(n|filename|o|outdir|data-dir|no-data-dir|z|zip-data-dir|no-report|pdf|version|clean-up|no-clean-up|h|help)[ =]).)*$"
     required:
       - multiqc
 

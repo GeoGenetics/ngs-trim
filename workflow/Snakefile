@@ -30,7 +30,7 @@ rule multiqc:
     benchmark:
         "benchmarks/reports/multiqc.log"
     params:
-        extra = "--force " + check_cmd(config["report"]["multiqc"], forbidden_args = ["-n", "--filename", "-o", "--outdir", "--data-dir", "--no-data-dir", "-z", "--zip-data-dir", "--no-report", "--pdf", "--version", "-h", "--help"]),
+        extra = "--force --clean-up " + config["report"]["multiqc"],
     localrule: True
     threads: 1
     resources:
