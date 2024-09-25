@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SNAKEMAKE_OPTS="--snakefile ../../workflow/Snakefile --configfile config/config.yaml --forceall $@"
+SNAKEMAKE_OPTS="--snakefile ../../workflow/Snakefile --configfile config/config.yaml --keep-storage-local-copies --forceall $@"
 
 for TEST in robot_tests
 do
