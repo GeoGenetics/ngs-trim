@@ -20,7 +20,7 @@ wildcard_constraints:
     read_type_raw  = "|".join(set(flatten(units.read_type_raw)))
 
 
-def _get_input(wildcards):
+def _get_input_data(wildcards):
     data = get_sample_library_lane_data(wildcards.sample, wildcards.library, wildcards.lane)
     if wildcards.read_type_raw == "R2":
         return allow_remote(data[1])
@@ -30,9 +30,9 @@ def _get_input(wildcards):
 
 rule get_fastq_raw:
     input:
-        _get_input
+        _get_input_data
     output:
-        temp("temp/reads/raw/{sample}_{library}_{lane}_{read_type_raw}.fastq.gz"),
+        "results/reads/raw/{sample}_{library}_{lane}_{read_type_raw}.fastq.gz",
     localrule: True
     threads: 1
     run:
