@@ -7,7 +7,6 @@
 units["read_type_trim"] = [flatten([get_read_type_trim(read_type_map) for read_type_map in get_read_type_map(u.sample, u.library, u.lane)]) for u in units.itertuples()]
 
 
-
 #############
 ### RULES ###
 #############

@@ -3,6 +3,19 @@
 ### FUNCTIONS ###
 #################
 
+def allow_remote(url):
+    # HTTP(s)
+    if url.startswith("http"):
+        return storage.http(url)
+
+    # FTP(s)
+    if url.startswith("ftp"):
+        return storage.ftp(url)
+
+    # If a file URL, just return it
+    return url
+
+
 def get_read_type_raw(sample, library, lane):
     return ["R1","R2"] if is_lane_pe(sample, library, lane) else ["R"]
 
@@ -15,7 +28,6 @@ units["read_type_raw"] = [get_read_type_raw(u.sample, u.library, u.lane) for u i
 #############
 ### RULES ###
 #############
-
 wildcard_constraints:
     read_type_raw  = "|".join(set(flatten(units.read_type_raw)))
 
@@ -42,10 +54,9 @@ rule get_fastq_raw:
         if src.suffix != ".gz":
             raise ValueError("Input FASTQ files is not GZip'ed: {}!".format(input[0]))
 
-        f = gzip.open(src, 'rb')
-        f.read(2)
-        f.close()
-        create_symlink(src, dst)
+        with gzip.open(src, 'rb') as f:
+            f.read(2)
+        dst.symlink_to(src.absolute())
 
 
 
