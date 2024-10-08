@@ -30,9 +30,9 @@
 <text text-anchor="start" x="1063.5" y="-46" font-family="monospace" font-size="10.00" fill="#000000">results/reads/trim/HD827sonic_2_lib1_L002_collapsed.fastq.gz</text>
 <text text-anchor="start" x="1063.5" y="-28" font-family="monospace" font-size="10.00" fill="#000000">results/reads/trim/HD827sonic_2_lib1_L002_singleton.fastq.gz</text>
 <text text-anchor="start" x="1417.5" y="-10" font-family="sans" font-size="10.00" fill="#000000"> &#160;</text>
-<polygon fill="#57d957" stroke="#57d957" points="1057.5,-278 1057.5,-278 1431.5,-278 1431.5,-278 1057.5,-278"/>
-<polygon fill="#57d957" stroke="#57d957" points="1057.5,-22 1057.5,-22 1431.5,-22 1431.5,-22 1057.5,-22"/>
-<polygon fill="none" stroke="#57d957" stroke-width="2" points="1057,-1 1057,-307 1430,-307 1430,-1 1057,-1"/>
+<polygon fill="#98d957" stroke="#98d957" points="1057.5,-278 1057.5,-278 1431.5,-278 1431.5,-278 1057.5,-278"/>
+<polygon fill="#98d957" stroke="#98d957" points="1057.5,-22 1057.5,-22 1431.5,-22 1431.5,-22 1057.5,-22"/>
+<polygon fill="none" stroke="#98d957" stroke-width="2" points="1057,-1 1057,-307 1430,-307 1430,-1 1057,-1"/>
 </g>
 <!-- 1 -->
 <g id="node2" class="node">
@@ -88,9 +88,9 @@
 <text text-anchor="start" x="1207.5" y="-391.8" font-family="sans" font-size="10.00" fill="#000000"> </text>
 <text text-anchor="start" x="808.5" y="-372" font-family="monospace" font-size="10.00" fill="#000000">reports/multiqc.html</text>
 <text text-anchor="start" x="808.5" y="-354" font-family="monospace" font-size="10.00" fill="#000000">reports/multiqc_data.zip</text>
-<polygon fill="#57d998" stroke="#57d998" points="802.5,-1184 802.5,-1184 1218.5,-1184 1218.5,-1184 802.5,-1184"/>
-<polygon fill="#57d998" stroke="#57d998" points="802.5,-406 802.5,-406 1218.5,-406 1218.5,-406 802.5,-406"/>
-<polygon fill="none" stroke="#57d998" stroke-width="2" points="802,-345 802,-1213 1217,-1213 1217,-345 802,-345"/>
+<polygon fill="#d95757" stroke="#d95757" points="802.5,-1184 802.5,-1184 1218.5,-1184 1218.5,-1184 802.5,-1184"/>
+<polygon fill="#d95757" stroke="#d95757" points="802.5,-406 802.5,-406 1218.5,-406 1218.5,-406 802.5,-406"/>
+<polygon fill="none" stroke="#d95757" stroke-width="2" points="802,-345 802,-1213 1217,-1213 1217,-345 802,-345"/>
 </g>
 <!-- 1&#45;&gt;0 -->
 <g id="edge1" class="edge">
@@ -111,12 +111,12 @@
 <text text-anchor="start" x="736.5" y="-1297.8" font-family="sans" font-size="10.00" fill="#000000"> </text>
 <text text-anchor="start" x="7.5" y="-1278" font-family="monospace" font-size="10.00" fill="#000000">stats/reads/fastqc_raw/{sample,HD827sonic_1|HD827sonic_2}_{library,lib1}_{lane,L001|L002}_{read_type_raw,R2|R1}.html</text>
 <text text-anchor="start" x="7.5" y="-1260" font-family="monospace" font-size="10.00" fill="#000000">stats/reads/fastqc_raw/{sample,HD827sonic_1|HD827sonic_2}_{library,lib1}_{lane,L001|L002}_{read_type_raw,R2|R1}_fastqc.zip</text>
-<polygon fill="#5798d9" stroke="#5798d9" points="1.5,-1352 1.5,-1352 747.5,-1352 747.5,-1352 1.5,-1352"/>
-<polygon fill="#5798d9" stroke="#5798d9" points="1.5,-1312 1.5,-1312 747.5,-1312 747.5,-1312 1.5,-1312"/>
-<polygon fill="none" stroke="#5798d9" stroke-width="2" points="1,-1251 1,-1381 746,-1381 746,-1251 1,-1251"/>
+<polygon fill="#d9d957" stroke="#d9d957" points="1.5,-1352 1.5,-1352 747.5,-1352 747.5,-1352 1.5,-1352"/>
+<polygon fill="#d9d957" stroke="#d9d957" points="1.5,-1312 1.5,-1312 747.5,-1312 747.5,-1312 1.5,-1312"/>
+<polygon fill="none" stroke="#d9d957" stroke-width="2" points="1,-1251 1,-1381 746,-1381 746,-1251 1,-1251"/>
 </g>
 <!-- 2&#45;&gt;1 -->
-<g id="edge5" class="edge">
+<g id="edge4" class="edge">
 <title>2&#45;&gt;1</title>
 <path fill="none" stroke="#c0c0c0" stroke-width="2" d="M451.8048,-1249.8842C536.5202,-1178.3556 675.2994,-1061.1788 793.2205,-961.6134"/>
 <polygon fill="#c0c0c0" stroke="#c0c0c0" stroke-width="2" points="795.574,-964.2069 800.9568,-955.0813 791.0581,-958.8584 795.574,-964.2069"/>
@@ -133,9 +133,9 @@
 <text text-anchor="start" x="1089.5" y="-1705.8" font-family="sans" font-weight="bold" font-size="14.00" fill="#000000">output →</text>
 <text text-anchor="start" x="1150.5" y="-1705.8" font-family="sans" font-size="10.00" fill="#000000"> </text>
 <text text-anchor="start" x="463.5" y="-1686" font-family="monospace" font-size="10.00" fill="#000000">results/reads/raw/{sample,HD827sonic_1|HD827sonic_2}_{library,lib1}_{lane,L001|L002}_{read_type_raw,R2|R1}.fastq.gz</text>
-<polygon fill="#98d957" stroke="#98d957" points="457.5,-1760 457.5,-1760 1161.5,-1760 1161.5,-1760 457.5,-1760"/>
-<polygon fill="#98d957" stroke="#98d957" points="457.5,-1720 457.5,-1720 1161.5,-1720 1161.5,-1720 457.5,-1720"/>
-<polygon fill="none" stroke="#98d957" stroke-width="2" points="457,-1677 457,-1789 1160,-1789 1160,-1677 457,-1677"/>
+<polygon fill="#57d998" stroke="#57d998" points="457.5,-1760 457.5,-1760 1161.5,-1760 1161.5,-1760 457.5,-1760"/>
+<polygon fill="#57d998" stroke="#57d998" points="457.5,-1720 457.5,-1720 1161.5,-1720 1161.5,-1720 457.5,-1720"/>
+<polygon fill="none" stroke="#57d998" stroke-width="2" points="457,-1677 457,-1789 1160,-1789 1160,-1677 457,-1677"/>
 </g>
 <!-- 3&#45;&gt;2 -->
 <g id="edge6" class="edge">
@@ -161,9 +161,9 @@
 <text text-anchor="start" x="697.5" y="-1464" font-family="monospace" font-size="10.00" fill="#000000">results/reads/trim/{sample,HD827sonic_1|HD827sonic_2}_{library,lib1}_{lane,L001|L002}_singleton.fastq.gz</text>
 <text text-anchor="start" x="697.5" y="-1446" font-family="monospace" font-size="10.00" fill="#000000">stats/reads/trim/{sample,HD827sonic_1|HD827sonic_2}_{library,lib1}_{lane,L001|L002}_pe.html</text>
 <text text-anchor="start" x="697.5" y="-1428" font-family="monospace" font-size="10.00" fill="#000000">stats/reads/trim/{sample,HD827sonic_1|HD827sonic_2}_{library,lib1}_{lane,L001|L002}_pe.json</text>
-<polygon fill="#57d9d9" stroke="#57d9d9" points="691.5,-1610 691.5,-1610 1329.5,-1610 1329.5,-1610 691.5,-1610"/>
-<polygon fill="#57d9d9" stroke="#57d9d9" points="691.5,-1570 691.5,-1570 1329.5,-1570 1329.5,-1570 691.5,-1570"/>
-<polygon fill="none" stroke="#57d9d9" stroke-width="2" points="691,-1419 691,-1639 1328,-1639 1328,-1419 691,-1419"/>
+<polygon fill="#d99857" stroke="#d99857" points="691.5,-1610 691.5,-1610 1329.5,-1610 1329.5,-1610 691.5,-1610"/>
+<polygon fill="#d99857" stroke="#d99857" points="691.5,-1570 691.5,-1570 1329.5,-1570 1329.5,-1570 691.5,-1570"/>
+<polygon fill="none" stroke="#d99857" stroke-width="2" points="691,-1419 691,-1639 1328,-1639 1328,-1419 691,-1419"/>
 </g>
 <!-- 3&#45;&gt;4 -->
 <g id="edge7" class="edge">
@@ -194,11 +194,11 @@
 <text text-anchor="start" x="1607.5" y="-1297.8" font-family="sans" font-size="10.00" fill="#000000"> </text>
 <text text-anchor="start" x="1611.5" y="-1297.8" font-family="sans" font-weight="bold" font-size="14.00" fill="#000000">output →</text>
 <text text-anchor="start" x="1672.5" y="-1297.8" font-family="sans" font-size="10.00" fill="#000000"> </text>
-<text text-anchor="start" x="811.5" y="-1278" font-family="monospace" font-size="10.00" fill="#000000">stats/reads/fastqc_trim/{sample,HD827sonic_1|HD827sonic_2}_{library,lib1}_{lane,L001|L002}_{read_type_trim,collapsed|R2|singleton|R1}.html</text>
-<text text-anchor="start" x="811.5" y="-1260" font-family="monospace" font-size="10.00" fill="#000000">stats/reads/fastqc_trim/{sample,HD827sonic_1|HD827sonic_2}_{library,lib1}_{lane,L001|L002}_{read_type_trim,collapsed|R2|singleton|R1}_fastqc.zip</text>
-<polygon fill="#d9d957" stroke="#d9d957" points="805.5,-1352 805.5,-1352 1683.5,-1352 1683.5,-1352 805.5,-1352"/>
-<polygon fill="#d9d957" stroke="#d9d957" points="805.5,-1312 805.5,-1312 1683.5,-1312 1683.5,-1312 805.5,-1312"/>
-<polygon fill="none" stroke="#d9d957" stroke-width="2" points="805,-1251 805,-1381 1682,-1381 1682,-1251 805,-1251"/>
+<text text-anchor="start" x="811.5" y="-1278" font-family="monospace" font-size="10.00" fill="#000000">stats/reads/fastqc_trim/{sample,HD827sonic_1|HD827sonic_2}_{library,lib1}_{lane,L001|L002}_{read_type_trim,R2|R1|singleton|collapsed}.html</text>
+<text text-anchor="start" x="811.5" y="-1260" font-family="monospace" font-size="10.00" fill="#000000">stats/reads/fastqc_trim/{sample,HD827sonic_1|HD827sonic_2}_{library,lib1}_{lane,L001|L002}_{read_type_trim,R2|R1|singleton|collapsed}_fastqc.zip</text>
+<polygon fill="#57d957" stroke="#57d957" points="805.5,-1352 805.5,-1352 1683.5,-1352 1683.5,-1352 805.5,-1352"/>
+<polygon fill="#57d957" stroke="#57d957" points="805.5,-1312 805.5,-1312 1683.5,-1312 1683.5,-1312 805.5,-1312"/>
+<polygon fill="none" stroke="#57d957" stroke-width="2" points="805,-1251 805,-1381 1682,-1381 1682,-1251 805,-1251"/>
 </g>
 <!-- 4&#45;&gt;5 -->
 <g id="edge8" class="edge">
@@ -207,7 +207,7 @@
 <polygon fill="#c0c0c0" stroke="#c0c0c0" stroke-width="2" points="1165.8501,-1391.4142 1170.8892,-1382.0944 1161.1381,-1386.2376 1165.8501,-1391.4142"/>
 </g>
 <!-- 5&#45;&gt;1 -->
-<g id="edge4" class="edge">
+<g id="edge5" class="edge">
 <title>5&#45;&gt;1</title>
 <path fill="none" stroke="#c0c0c0" stroke-width="2" d="M1214.6898,-1249.8842C1211.0794,-1241.5988 1207.2021,-1232.7009 1203.1007,-1223.2888"/>
 <polygon fill="#c0c0c0" stroke="#c0c0c0" stroke-width="2" points="1206.3047,-1221.8798 1199.1012,-1214.1106 1199.8875,-1224.6762 1206.3047,-1221.8798"/>

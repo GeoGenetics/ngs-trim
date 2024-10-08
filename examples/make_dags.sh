@@ -2,7 +2,7 @@
 
 SNAKEMAKE_OPTS="--snakefile ../../workflow/Snakefile --configfile config/config.yaml --keep-storage-local-copies --forceall $@"
 
-for TEST in HD827sonic
+for TEST in HD827sonic HD827sonic_small
 do
     cd $TEST/
     snakemake $SNAKEMAKE_OPTS --dryrun
