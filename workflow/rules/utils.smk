@@ -1,8 +1,5 @@
-import os
 import pandas as pd
 from typing import List, Dict
-from collections import defaultdict
-from snakemake.io import Namedlist
 
 
 #################
@@ -45,6 +42,7 @@ def to_dict(keys: List, values: List) -> Dict:
 
     Even though it is a simple function, it makes the code more readable.
     """
+    from collections import defaultdict
     if len(keys) != len(values):
         raise ValueError("")
 
@@ -78,45 +76,7 @@ def get_rule_stats(rule_name):
     return set(filter(r.match, getattr(rules, rule_name).output))
 
 
-def get_samples(seq_type=".", material=".", all=True):
-    # Get state where all samples are TRUE
-    bool_true = units["sample"].str.match(".")
-
-    type_cond = (
-        units.seq_type.str.match(seq_type, case=False)
-        if "seq_type" in units.columns
-        else bool_true
-    )
-    material_cond = (
-        units.material.str.match(material, case=False)
-        if "material" in units.columns
-        else bool_true
-    )
-    tot_cond = (type_cond & material_cond).groupby(level="sample")
-    if all:
-        tot_cond = tot_cond.all()
-
-    return [idx for idx, bool in tot_cond.items() if bool]
-
-
-def get_groups():
-    return samples["group"].unique()
-
-
-def get_group_samples(group):
-    return samples.loc[samples["group"] == group]["sample"]
-
-
 ### Units
-
-
-def get_libraries():
-    return units["library"].unique()
-
-
-def get_lanes():
-    return units["lane"].unique()
-
 
 def is_units_align(units):
     return units.data.str.endswith(".cram")
@@ -129,10 +89,6 @@ def get_units_pe(reverse=False):
         return units[~units_pe]
     else:
         return units[units_pe]
-
-
-def get_units_se():
-    return get_units_pe(reverse=True)
 
 
 def get_adapters(wildcards):
