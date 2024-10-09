@@ -13,13 +13,13 @@ units: config/units.tsv
 reads:
   trim:
     activate: true
-    tool: fastp
-    params: "--verbose --detect_adapter_for_pe --dont_eval_duplication --trim_poly_g --trim_poly_x --qualified_quality_phred 30 --average_qual 25 --length_required 30 --low_complexity_filter --complexity_threshold 30 --overrepresentation_analysis --correction --overlap_len_require 30 --overlap_diff_limit 5 --overlap_diff_percent_limit 20"
+    tool: adapterremoval
+    params: "--trimns --maxns 20 --trimqualities --minquality 5 --minlength 30"
 
   # Ignored for SE
   collapse:
     activate: true
-    params: "--merge"
+    params: "--collapse --minalignmentlength 11 --collapse-conservatively"
 
 report:
   multiqc: "--verbose"
