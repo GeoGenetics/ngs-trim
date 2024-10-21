@@ -46,7 +46,7 @@ if config["reads"]["trim"]["tool"] == "cutadapt":
         params:
             extra = lambda w: config["reads"]["trim"]["params"] + (" -a {} -A {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
         priority: 10
-        threads: 20
+        threads: 10
         resources:
             mem = lambda w, attempt: f"{15 * attempt} GiB",
             runtime = lambda w, attempt: f"{5 * attempt} h",
@@ -66,7 +66,7 @@ if config["reads"]["trim"]["tool"] == "cutadapt":
         params:
             extra = lambda w: config["reads"]["trim"]["params"] + (" -a {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
         priority: 10
-        threads: 20
+        threads: 10
         resources:
             mem = lambda w, attempt: f"{15 * attempt} GiB",
             runtime = lambda w, attempt: f"{5 * attempt} h",
@@ -177,7 +177,7 @@ elif config["reads"]["trim"]["tool"] == "trimmomatic":
             extra = lambda w, output: f"-trimlog {output.trim_log}",
             trimmer = lambda w, input: [config["reads"]["trim"]["params"].format(ADAPTER_FASTA = input.adapt)],
         priority: 10
-        threads: 20
+        threads: 10
         resources:
             mem = lambda w, attempt: f"{15 * attempt} GiB",
             runtime = lambda w, attempt: f"{2 * attempt} h",
