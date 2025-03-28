@@ -1,0 +1,24 @@
+[project]
+channels = ["conda-forge", "bioconda", "nodefaults"]
+name = "ngs-taxon"
+platforms = ["linux-64"]
+version = "0.8.0"
+
+[tasks]
+
+[dependencies]
+snakemake = ">=9.0.1,<10"
+snakemake-executor-plugin-slurm = ">=1.1.0,<2"
+conda = ">=25.1.1,<26"
+
+[environments]
+test = { features = ["test"] }
+format = { features = ["format"] }
+
+[feature.test.dependencies]
+snakemake = ">=9.0.1,<10"
+conda = ">=25.1.1,<26"
+
+[feature.format.dependencies]
+black = "*"
+snakefmt = "*"
