@@ -1,13 +1,13 @@
 snakemake.utils.min_version("8.11.2")
 
 # Define wrapper versions
-wrapper_ver = "v5.5.1"
+wrapper_ver = "v5.8.3"
+
 
 include: "rules/utils.smk"
 include: "rules/setup.smk"
 include: "rules/raw.smk"
 include: "rules/trim.smk"
-
 
 
 #####################
@@ -18,31 +18,51 @@ rule multiqc:
         ### FastQC raw
         expand_pandas(get_rule_stats("fastqc_raw"), units[~is_units_align(units)]),
         ### Trimming
-        expand_pandas(get_rule_stats("{trimmer}_fastq_pe".format(trimmer=config["reads"]["trim"]["tool"])), units[~is_units_align(units) & units.seq_type.eq("pe")]) if is_activated("reads/trim") else [],
-        expand_pandas(get_rule_stats("{trimmer}_fastq_se".format(trimmer=config["reads"]["trim"]["tool"])), units[~is_units_align(units) & units.seq_type.eq("se")]) if is_activated("reads/trim") else [],
+        expand_pandas(
+            get_rule_stats(
+                "{trimmer}_fastq_pe".format(trimmer=config["reads"]["trim"]["tool"])
+            ),
+            units[~is_units_align(units) & units.seq_type.eq("pe")],
+        )
+        if is_activated("reads/trim")
+        else [],
+        expand_pandas(
+            get_rule_stats(
+                "{trimmer}_fastq_se".format(trimmer=config["reads"]["trim"]["tool"])
+            ),
+            units[~is_units_align(units) & units.seq_type.eq("se")],
+        )
+        if is_activated("reads/trim")
+        else [],
         ### FastqQC trimmed
-        expand_pandas(get_rule_stats("fastqc_trim"), units[~is_units_align(units)]) if is_activated("reads/trim") else [],
+        expand_pandas(get_rule_stats("fastqc_trim"), units[~is_units_align(units)])
+        if is_activated("reads/trim")
+        else [],
     output:
-        html = "reports/multiqc.html",
-        data = "reports/multiqc_data.zip",
+        html="reports/multiqc.html",
+        data="reports/multiqc_data.zip",
     log:
-        "logs/reports/multiqc.log"
+        "logs/reports/multiqc.log",
     benchmark:
         "benchmarks/reports/multiqc.log"
     params:
-        extra = "--force --clean-up " + config["report"]["multiqc"],
+        extra="--force --clean-up " + config["report"]["multiqc"],
     localrule: True
     threads: 1
     resources:
-        mem = lambda w, attempt: f"{10 * attempt} GiB",
-        runtime = lambda w, attempt: f"{30 * attempt} m",
+        mem=lambda w, attempt: f"{10* attempt} GiB",
+        runtime=lambda w, attempt: f"{30* attempt} m",
     wrapper:
         f"{wrapper_ver}/bio/multiqc"
 
+
 rule all:
     input:
-        qc = rules.multiqc.output.html,
-        res = expand_pandas("results/reads/trim/{sample}_{library}_{lane}_{read_type_trim}.fastq.gz", units),
+        qc=rules.multiqc.output.html,
+        res=expand_pandas(
+            "results/reads/trim/{sample}_{library}_{lane}_{read_type_trim}.fastq.gz",
+            units,
+        ),
     message:
         "Read trimming finished successfully!"
     default_target: True

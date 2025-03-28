@@ -8,6 +8,7 @@ from typing import List, Dict
 
 ### General
 
+
 def flatten(list_of_lists: List) -> List:
     """Flatten an irregular list of lists recursively
 
@@ -43,6 +44,7 @@ def to_dict(keys: List, values: List) -> Dict:
     Even though it is a simple function, it makes the code more readable.
     """
     from collections import defaultdict
+
     if len(keys) != len(values):
         raise ValueError("")
 
@@ -54,6 +56,7 @@ def to_dict(keys: List, values: List) -> Dict:
 
 
 ### Config
+
 
 def _item_or_sample(row, item):
     i = getattr(row, item, None)
@@ -71,12 +74,14 @@ def is_activated(xpath):
 
 ### Samples
 
+
 def get_rule_stats(rule_name):
     r = re.compile("^stats/")
     return set(filter(r.match, getattr(rules, rule_name).output))
 
 
 ### Units
+
 
 def is_units_align(units):
     return units.data.str.endswith(".cram")
