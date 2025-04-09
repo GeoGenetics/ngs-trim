@@ -54,12 +54,3 @@ jobs:
 
       - name: Run examples
         run: pixi run -e test env --chdir ./examples/ ./make_dags.sh
-
-  OK:
-    if: github.event.pull_request.merged != true || github.ref != 'refs/heads/main'
-    needs:
-      - format
-      - test
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "CI OK!"
