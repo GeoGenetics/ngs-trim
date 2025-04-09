@@ -132,7 +132,7 @@ elif config["reads"]["trim"]["tool"] == "adapterremoval":
         threads: 10
         resources:
             mem=lambda w, attempt: f"{15* attempt} GiB",
-            runtime=lambda w, attempt: f"{2* attempt} h",
+            runtime=lambda w, attempt: f"{3* attempt} h",
         wrapper:
             f"{wrapper_ver}/bio/adapterremoval"
 

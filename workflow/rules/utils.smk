@@ -9,23 +9,6 @@ from typing import List, Dict
 ### General
 
 
-def flatten(list_of_lists: List) -> List:
-    """Flatten an irregular list of lists recursively
-
-    https://stackoverflow.com/a/53778278
-
-    :param list_of_lists: A list of lists
-    :return result: A string that has been flattened from a list of lists
-    """
-    result = list()
-    for i in list_of_lists:
-        if isinstance(i, list):
-            result.extend(flatten(i))
-        else:
-            result.append(str(i))
-    return result
-
-
 def expand_pandas(string: List, df: pd.DataFrame, allow_missing=False) -> List:
     """Expand string following columns in the dataframe"""
     return set(
