@@ -16,13 +16,10 @@ def allow_remote(url):
     return url
 
 
-def get_read_type_raw(sample, library, lane):
-    return ["R1", "R2"] if is_lane_pe(sample, library, lane) else ["R"]
-
-
 # Add RAW read type to UNITS
 units["read_type_raw"] = [
-    get_read_type_raw(u.sample, u.library, u.lane) for u in units.itertuples()
+    ["R1", "R2"] if is_lane_pe(u.sample, u.library, u.lane) else ["R"]
+    for u in units.itertuples()
 ]
 
 

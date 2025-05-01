@@ -1,14 +1,16 @@
 snakemake.utils.min_version("9.0.0")
 
 # Define wrapper versions
-wrapper_ver = "v5.10.0"
+wrapper_ver = "v6.0.1"
 
+units = config["units"]
+snakemake.utils.validate(units, schema=Path(workflow.current_basedir) / "schemas/units.schema.yaml")
+config = config["cfg"]
+snakemake.utils.validate(config, schema=Path(workflow.current_basedir) / "schemas/config.schema.yaml")
 
 include: "rules/utils.smk"
-include: "rules/setup.smk"
 include: "rules/raw.smk"
 include: "rules/trim.smk"
-
 
 #####################
 ### Read Trimming ###
@@ -16,27 +18,27 @@ include: "rules/trim.smk"
 rule multiqc:
     input:
         ### FastQC raw
-        expand_pandas(get_rule_stats("fastqc_raw"), units[~is_units_align(units)]),
+        expand_pd(get_rule_stats("fastqc_raw"), units[~is_units_align(units)].explode("read_type_raw")),
         ### Trimming
-        expand_pandas(
+        expand_pd(
             get_rule_stats(
-                "{trimmer}_fastq_pe".format(trimmer=config["reads"]["trim"]["tool"])
+                "{trimmer}_fastq_pe".format(trimmer=config["trim"]["tool"])
             ),
-            units[~is_units_align(units) & units.seq_type.eq("pe")],
+            units[~is_units_align(units) & units.seq_type.eq("pe")].explode("read_type_raw"),
         )
-        if is_activated("reads/trim")
+        if is_activated("trim")
         else [],
-        expand_pandas(
+        expand_pd(
             get_rule_stats(
-                "{trimmer}_fastq_se".format(trimmer=config["reads"]["trim"]["tool"])
+                "{trimmer}_fastq_se".format(trimmer=config["trim"]["tool"])
             ),
-            units[~is_units_align(units) & units.seq_type.eq("se")],
+            units[~is_units_align(units) & units.seq_type.eq("se")].explode("read_type_raw"),
         )
-        if is_activated("reads/trim")
+        if is_activated("trim")
         else [],
         ### FastqQC trimmed
-        expand_pandas(get_rule_stats("fastqc_trim"), units[~is_units_align(units)])
-        if is_activated("reads/trim")
+        expand_pd(get_rule_stats("fastqc_trim"), units[~is_units_align(units)].explode("read_type_trim"))
+        if is_activated("trim")
         else [],
     output:
         html="reports/multiqc.html",
@@ -46,7 +48,7 @@ rule multiqc:
     benchmark:
         "benchmarks/reports/multiqc.log"
     params:
-        extra="--force --clean-up " + config["report"]["multiqc"],
+        extra="--force --clean-up " + config.get("report", {}).get("multiqc", ""),
     localrule: True
     threads: 1
     resources:
@@ -59,9 +61,9 @@ rule multiqc:
 rule all:
     input:
         qc=rules.multiqc.output.html,
-        res=expand_pandas(
+        res=expand_pd(
             "results/reads/trim/{sample}_{library}_{lane}_{read_type_trim}.fastq.gz",
-            units,
+            units.explode("read_type_trim"),
         ),
     message:
         "Read trimming finished successfully!"
