@@ -1,25 +1,18 @@
 
 # - Only tested with Phred33 quality scores
 
-samples: config/samples.tsv
-
-units: config/units.tsv
-
-
-
 #############
 ### READS ###
 #############
-reads:
-  trim:
-    activate: true
-    tool: adapterremoval
-    params: "--mm 3 --trimns --maxns 20 --trimqualities --minquality 2 --minlength 30"
+trim:
+  activate: true
+  tool: adapterremoval
+  params: "--mm 3 --trimns --maxns 20 --trimqualities --minquality 2 --minlength 30"
 
-  # Ignored for SE
-  collapse:
-    activate: true
-    params: "--collapse-conservatively --minalignmentlength 11"
+# Ignored for SE
+collapse:
+  activate: true
+  params: "--collapse-conservatively --minalignmentlength 11"
 
 report:
   multiqc: "--verbose"
