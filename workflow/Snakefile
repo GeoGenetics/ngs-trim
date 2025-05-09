@@ -8,9 +8,11 @@ wrapper_ver = "v6.0.1"
 # Default value for testing purposes
 units = config.get(
     "units",
-    pd.read_table("config/units.tsv", comment="#").set_index(
-        ["sample", "library", "lane"], drop=False
-    ),
+    pd.read_table(
+        "config/units.tsv",
+        converters={"seq_type": (lambda x: x.casefold())},
+        comment="#",
+    ).set_index(["sample", "library", "lane"], drop=False),
 )
 snakemake.utils.validate(
     units, schema=Path(workflow.current_basedir) / "schemas/units.schema.yaml"
@@ -86,9 +88,13 @@ rule multiqc:
 rule all:
     input:
         qc=rules.multiqc.output.html,
-        res=expand_pd(
-            "results/reads/trim/{sample}_{library}_{lane}_{read_type_trim}.fastq.gz",
-            units.explode("read_type_trim"),
+        res=(
+            expand_pd(
+                "results/reads/trim/{sample}_{library}_{lane}_{read_type_trim}.fastq.gz",
+                units.explode("read_type_trim"),
+            )
+            if is_activated("trim")
+            else []
         ),
     message:
         "Read trimming finished successfully!"

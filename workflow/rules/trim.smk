@@ -347,9 +347,9 @@ use rule fastqc_raw as fastqc_trim with:
     input:
         fq="results/reads/trim/{sample}_{library}_{lane}_{read_type_trim}.fastq.gz",
     output:
-        html="stats/reads/fastqc_trim/{sample}_{library}_{lane}_{read_type_trim}.html",
-        zip="stats/reads/fastqc_trim/{sample}_{library}_{lane}_{read_type_trim}_fastqc.zip",
+        html="stats/reads/fastqc/trim/{sample}_{library}_{lane}_{read_type_trim}.html",
+        zip="stats/reads/fastqc/trim/{sample}_{library}_{lane}_{read_type_trim}_fastqc.zip",
     log:
-        "logs/reads/fastqc_trim/{sample}_{library}_{lane}_{read_type_trim}.log",
+        "logs/reads/fastqc/trim/{sample}_{library}_{lane}_{read_type_trim}.log",
     benchmark:
-        "benchmarks/reads/fastqc_trim/{sample}_{library}_{lane}_{read_type_trim}.jsonl"
+        "benchmarks/reads/fastqc/trim/{sample}_{library}_{lane}_{read_type_trim}.jsonl"

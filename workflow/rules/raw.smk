@@ -67,14 +67,12 @@ rule fastqc_raw:
     input:
         rules.get_fastq_raw.output,
     output:
-        html="stats/reads/fastqc_raw/{sample}_{library}_{lane}_{read_type_raw}.html",
-        zip="stats/reads/fastqc_raw/{sample}_{library}_{lane}_{read_type_raw}_fastqc.zip",
+        html="stats/reads/fastqc/raw/{sample}_{library}_{lane}_{read_type_raw}.html",
+        zip="stats/reads/fastqc/raw/{sample}_{library}_{lane}_{read_type_raw}_fastqc.zip",
     log:
-        "logs/reads/fastqc_raw/{sample}_{library}_{lane}_{read_type_raw}.log",
+        "logs/reads/fastqc/raw/{sample}_{library}_{lane}_{read_type_raw}.log",
     benchmark:
-        "benchmarks/reads/fastqc_raw/{sample}_{library}_{lane}_{read_type_raw}.jsonl"
-    params:
-        "",
+        "benchmarks/reads/fastqc/raw/{sample}_{library}_{lane}_{read_type_raw}.jsonl"
     threads: 2
     resources:
         # Memory is hard-coded to 250M per thread (https://github.com/bcbio/bcbio-nextgen/issues/2989)
