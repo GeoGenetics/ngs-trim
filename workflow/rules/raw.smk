@@ -16,13 +16,10 @@ def allow_remote(url):
     return url
 
 
-def get_read_type_raw(sample, library, lane):
-    return ["R1", "R2"] if is_lane_pe(sample, library, lane) else ["R"]
-
-
 # Add RAW read type to UNITS
 units["read_type_raw"] = [
-    get_read_type_raw(u.sample, u.library, u.lane) for u in units.itertuples()
+    ["R1", "R2"] if is_lane_pe(u.sample, u.library, u.lane) else ["R"]
+    for u in units.itertuples()
 ]
 
 
@@ -70,18 +67,15 @@ rule fastqc_raw:
     input:
         rules.get_fastq_raw.output,
     output:
-        html="stats/reads/fastqc_raw/{sample}_{library}_{lane}_{read_type_raw}.html",
-        zip="stats/reads/fastqc_raw/{sample}_{library}_{lane}_{read_type_raw}_fastqc.zip",
+        html="stats/reads/fastqc/raw/{sample}_{library}_{lane}_{read_type_raw}.html",
+        zip="stats/reads/fastqc/raw/{sample}_{library}_{lane}_{read_type_raw}_fastqc.zip",
     log:
-        "logs/reads/fastqc_raw/{sample}_{library}_{lane}_{read_type_raw}.log",
+        "logs/reads/fastqc/raw/{sample}_{library}_{lane}_{read_type_raw}.log",
     benchmark:
-        "benchmarks/reads/fastqc_raw/{sample}_{library}_{lane}_{read_type_raw}.jsonl"
-    params:
-        "",
-    threads: 2
+        "benchmarks/reads/fastqc/raw/{sample}_{library}_{lane}_{read_type_raw}.jsonl"
+    threads: 4
     resources:
-        # Memory is hard-coded to 250M per thread (https://github.com/bcbio/bcbio-nextgen/issues/2989)
-        mem=lambda w, threads: f"{512* threads} MiB",
+        mem=lambda w, attempt: f"{5* attempt} GiB",
         runtime=lambda w, attempt: f"{2* attempt} h",
     wrapper:
         f"{wrapper_ver}/bio/fastqc"

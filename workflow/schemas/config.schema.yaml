@@ -5,13 +5,7 @@ description: Read trimming configuration file
 type: object
 properties:
 
-  samples:
-    type: string
-
-  units:
-    type: string
-
-  reads:
+  trim:
     type: object
     properties:
       trim:
@@ -30,20 +24,16 @@ properties:
           - tool
           - params
 
-      collapse:
-        type: object
-        properties:
-          activate:
-            type: boolean
-          params:
-            type: string
-        required:
-          - activate
-          - params
-
-    required:
-      - trim
-      - collapse
+  collapse:
+    type: object
+    properties:
+      activate:
+        type: boolean
+      params:
+        type: string
+      required:
+        - activate
+        - params
 
   report:
     type: object
@@ -55,7 +45,5 @@ properties:
       - multiqc
 
 required:
-  - samples
-  - units
-  - reads
-  - report
+  - trim
+  - collapse

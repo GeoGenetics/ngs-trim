@@ -2,6 +2,7 @@
 ### FUNCTIONS ###
 #################
 
+
 # Add TRIM read type
 units["read_type_trim"] = [
     flatten(
@@ -12,6 +13,17 @@ units["read_type_trim"] = [
     )
     for u in units.itertuples()
 ]
+
+
+def get_adapters(wildcards):
+    adapters = units.loc[
+        (wildcards.sample, wildcards.library, wildcards.lane), "adapters"
+    ]
+    if isinstance(adapters, str):
+        return adapters.split(",")
+
+    # If no adapters found, return None
+    return None
 
 
 #############
@@ -37,13 +49,13 @@ rule adapters_to_file:
                 print(params.adapters[i], file=fp)
 
 
-if config["reads"]["trim"]["tool"] == "cutadapt":
+if config["trim"]["tool"] == "cutadapt":
 
     rule cutadapt_fastq_pe:
         input:
             lambda w: expand(
                 rules.get_fastq_raw.output,
-                read_type_raw=get_read_type_raw(w.sample, w.library, w.lane),
+                read_type_raw=units.loc[w.sample, w.library, w.lane].read_type_raw,
                 allow_missing=True,
             ),
         output:
@@ -55,7 +67,7 @@ if config["reads"]["trim"]["tool"] == "cutadapt":
         benchmark:
             "benchmarks/reads/trim/{sample}_{library}_{lane}_pe.jsonl"
         params:
-            extra=lambda w: config["reads"]["trim"]["params"]
+            extra=lambda w: config["trim"]["params"]
             + (" -a {} -A {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
         priority: 10
         threads: 10
@@ -69,7 +81,7 @@ if config["reads"]["trim"]["tool"] == "cutadapt":
         input:
             lambda w: expand(
                 rules.get_fastq_raw.output,
-                read_type_raw=get_read_type_raw(w.sample, w.library, w.lane),
+                read_type_raw=units.loc[w.sample, w.library, w.lane].read_type_raw,
                 allow_missing=True,
             ),
         output:
@@ -80,7 +92,7 @@ if config["reads"]["trim"]["tool"] == "cutadapt":
         benchmark:
             "benchmarks/reads/trim/{sample}_{library}_{lane}_se.jsonl"
         params:
-            extra=lambda w: config["reads"]["trim"]["params"]
+            extra=lambda w: config["trim"]["params"]
             + (" -a {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
         priority: 10
         threads: 10
@@ -90,7 +102,7 @@ if config["reads"]["trim"]["tool"] == "cutadapt":
         wrapper:
             f"{wrapper_ver}/bio/cutadapt/se"
 
-elif config["reads"]["trim"]["tool"] == "adapterremoval":
+elif config["trim"]["tool"] == "adapterremoval":
 
     def _collapsed_input():
         return {
@@ -102,11 +114,11 @@ elif config["reads"]["trim"]["tool"] == "adapterremoval":
         input:
             sample=lambda w: expand(
                 rules.get_fastq_raw.output,
-                read_type_raw=get_read_type_raw(w.sample, w.library, w.lane),
+                read_type_raw=units.loc[w.sample, w.library, w.lane].read_type_raw,
                 allow_missing=True,
             ),
         output:
-            **_collapsed_input() if is_activated("reads/collapse") else {},
+            **_collapsed_input() if is_activated("collapse") else {},
             fq1="results/reads/trim/{sample}_{library}_{lane}_R1.fastq.gz",
             fq2="results/reads/trim/{sample}_{library}_{lane}_R2.fastq.gz",
             singleton="results/reads/trim/{sample}_{library}_{lane}_singleton.fastq.gz",
@@ -117,17 +129,13 @@ elif config["reads"]["trim"]["tool"] == "adapterremoval":
         benchmark:
             "benchmarks/reads/trim/{sample}_{library}_{lane}_pe.jsonl"
         params:
-            extra=lambda w: config["reads"]["trim"]["params"]
+            extra=lambda w: config["trim"]["params"]
             + (
                 " --adapter1 {} --adapter2 {} ".format(*get_adapters(w))
                 if get_adapters(w)
                 else " "
             )
-            + (
-                config["reads"]["collapse"]["params"]
-                if is_activated("reads/collapse")
-                else " "
-            ),
+            + (config["collapse"]["params"] if is_activated("collapse") else " "),
         priority: 10
         threads: 10
         resources:
@@ -146,16 +154,16 @@ elif config["reads"]["trim"]["tool"] == "adapterremoval":
         benchmark:
             "benchmarks/reads/trim/{sample}_{library}_{lane}_se.jsonl"
         params:
-            extra=lambda w: config["reads"]["trim"]["params"]
+            extra=lambda w: config["trim"]["params"]
             + (" --adapter1 {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
 
-elif config["reads"]["trim"]["tool"] == "fastp":
+elif config["trim"]["tool"] == "fastp":
 
     rule fastp_fastq_pe:
         input:
             sample=lambda w: expand(
                 rules.get_fastq_raw.output,
-                read_type_raw=get_read_type_raw(w.sample, w.library, w.lane),
+                read_type_raw=units.loc[w.sample, w.library, w.lane].read_type_raw,
                 allow_missing=True,
             ),
         output:
@@ -167,7 +175,7 @@ elif config["reads"]["trim"]["tool"] == "fastp":
             unpaired="results/reads/trim/{sample}_{library}_{lane}_singleton.fastq.gz",
             merged=(
                 "results/reads/trim/{sample}_{library}_{lane}_collapsed.fastq.gz"
-                if is_activated("reads/collapse")
+                if is_activated("collapse")
                 else []
             ),
             failed="results/reads/trim/{sample}_{library}_{lane}_discarded.fastq.gz",
@@ -178,7 +186,7 @@ elif config["reads"]["trim"]["tool"] == "fastp":
         benchmark:
             "benchmarks/reads/trim/{sample}_{library}_{lane}_pe.jsonl"
         params:
-            extra=lambda w: config["reads"]["trim"]["params"]
+            extra=lambda w: config["trim"]["params"]
             + (
                 " --adapter_sequence {} --adapter_sequence_r2 {} ".format(
                         *get_adapters(w)
@@ -186,11 +194,7 @@ elif config["reads"]["trim"]["tool"] == "fastp":
                     if get_adapters(w)
                 else " "
             )
-            + (
-                config["reads"]["collapse"]["params"]
-                if is_activated("reads/collapse")
-                else " "
-            ),
+            + (config["collapse"]["params"] if is_activated("collapse") else " "),
         priority: 10
         threads: 10
         resources:
@@ -210,14 +214,14 @@ elif config["reads"]["trim"]["tool"] == "fastp":
         benchmark:
             "benchmarks/reads/trim/{sample}_{library}_{lane}_se.jsonl"
         params:
-            extra=lambda w: config["reads"]["trim"]["params"]
+            extra=lambda w: config["trim"]["params"]
             + (
                 " --adapter_sequence {} ".format(*get_adapters(w))
                 if get_adapters(w)
                 else " "
             ),
 
-elif config["reads"]["trim"]["tool"] == "trimmomatic":
+elif config["trim"]["tool"] == "trimmomatic":
 
     rule trimmomatic_fastq_pe:
         input:
@@ -249,7 +253,7 @@ elif config["reads"]["trim"]["tool"] == "trimmomatic":
         params:
             extra=lambda w, output: f"-trimlog {output.trim_log}",
             trimmer=lambda w, input: [
-                config["reads"]["trim"]["params"].format(ADAPTER_FASTA=input.adapt)
+                config["trim"]["params"].format(ADAPTER_FASTA=input.adapt)
             ],
         priority: 10
         threads: 10
@@ -263,7 +267,7 @@ elif config["reads"]["trim"]["tool"] == "trimmomatic":
         input:
             sample=lambda w: expand(
                 rules.get_fastq_raw.output,
-                read_type_raw=get_read_type_raw(w.sample, w.library, w.lane),
+                read_type_raw=units.loc[w.sample, w.library, w.lane].read_type_raw,
                 allow_missing=True,
             ),
             adapt=rules.adapters_to_file.output.fas,
@@ -277,7 +281,7 @@ elif config["reads"]["trim"]["tool"] == "trimmomatic":
         params:
             extra=lambda w, output: f"-trimlog {output.trim_log}",
             trimmer=lambda w, input: [
-                config["reads"]["trim"]["params"].format(ADAPTER_FASTA=input.adapt)
+                config["trim"]["params"].format(ADAPTER_FASTA=input.adapt)
             ],
         priority: 10
         threads: 20
@@ -287,13 +291,13 @@ elif config["reads"]["trim"]["tool"] == "trimmomatic":
         wrapper:
             f"{wrapper_ver}/bio/trimmomatic/se"
 
-elif config["reads"]["trim"]["tool"] == "bbduk":
+elif config["trim"]["tool"] == "bbduk":
 
     rule bbduk_fastq_pe:
         input:
             sample=lambda w: expand(
                 rules.get_fastq_raw.output,
-                read_type_raw=get_read_type_raw(w.sample, w.library, w.lane),
+                read_type_raw=units.loc[w.sample, w.library, w.lane].read_type_raw,
                 allow_missing=True,
             ),
         output:
@@ -310,7 +314,7 @@ elif config["reads"]["trim"]["tool"] == "bbduk":
         benchmark:
             "benchmarks/reads/trim/{sample}_{library}_{lane}_pe.jsonl"
         params:
-            extra=lambda w: config["reads"]["trim"]["params"]
+            extra=lambda w: config["trim"]["params"]
             + (" literal={},{} ".format(*get_adapters(w)) if get_adapters(w) else " "),
         priority: 10
         threads: 10
@@ -330,7 +334,7 @@ elif config["reads"]["trim"]["tool"] == "bbduk":
         benchmark:
             "benchmarks/reads/trim/{sample}_{library}_{lane}_se.jsonl"
         params:
-            extra=lambda w: config["reads"]["trim"]["params"]
+            extra=lambda w: config["trim"]["params"]
             + (" literal={} ".format(*get_adapters(w)) if get_adapters(w) else " "),
 
 
@@ -343,9 +347,9 @@ use rule fastqc_raw as fastqc_trim with:
     input:
         fq="results/reads/trim/{sample}_{library}_{lane}_{read_type_trim}.fastq.gz",
     output:
-        html="stats/reads/fastqc_trim/{sample}_{library}_{lane}_{read_type_trim}.html",
-        zip="stats/reads/fastqc_trim/{sample}_{library}_{lane}_{read_type_trim}_fastqc.zip",
+        html="stats/reads/fastqc/trim/{sample}_{library}_{lane}_{read_type_trim}.html",
+        zip="stats/reads/fastqc/trim/{sample}_{library}_{lane}_{read_type_trim}_fastqc.zip",
     log:
-        "logs/reads/fastqc_trim/{sample}_{library}_{lane}_{read_type_trim}.log",
+        "logs/reads/fastqc/trim/{sample}_{library}_{lane}_{read_type_trim}.log",
     benchmark:
-        "benchmarks/reads/fastqc_trim/{sample}_{library}_{lane}_{read_type_trim}.jsonl"
+        "benchmarks/reads/fastqc/trim/{sample}_{library}_{lane}_{read_type_trim}.jsonl"

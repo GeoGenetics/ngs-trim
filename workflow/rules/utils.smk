@@ -1,5 +1,5 @@
 import pandas as pd
-from typing import List, Dict
+from typing import List
 
 
 #################
@@ -9,43 +9,11 @@ from typing import List, Dict
 ### General
 
 
-def expand_pandas(string: List, df: pd.DataFrame, allow_missing=False) -> List:
-    """Expand string following columns in the dataframe"""
-    return set(
-        flatten(
-            [
-                expand(string, **row._asdict(), allow_missing=allow_missing)
-                for row in df.itertuples(False)
-            ]
-        )
-    )
-
-
-def to_dict(keys: List, values: List) -> Dict:
-    """Convert two lists (keys and values) to a dictionary
-
-    Even though it is a simple function, it makes the code more readable.
-    """
-    from collections import defaultdict
-
-    if len(keys) != len(values):
-        raise ValueError("")
-
-    out_dict = defaultdict(list)
-    for key, val in list(zip(keys, values)):
-        out_dict[key].append(val)
-
-    return out_dict
+def expand_pd(string: List, df: pd.DataFrame, allow_missing=False) -> List:
+    return set(expand(string, zip, **df.to_dict("list"), allow_missing=allow_missing))
 
 
 ### Config
-
-
-def _item_or_sample(row, item):
-    i = getattr(row, item, None)
-    if pd.isnull(i):
-        return getattr(row, "sample")
-    return i
 
 
 def is_activated(xpath):
@@ -70,40 +38,12 @@ def is_units_align(units):
     return units.data.str.endswith(".cram")
 
 
-def get_units_pe(reverse=False):
-    units_pe = units.seq_type.isin(["pe", "hic"])
-
-    if reverse:
-        return units[~units_pe]
-    else:
-        return units[units_pe]
-
-
-def get_adapters(wildcards):
-    adapters = units.loc[
-        (wildcards.sample, wildcards.library, wildcards.lane), "adapters"
-    ]
-    if isinstance(adapters, str):
-        return adapters.split(",")
-
-    # If no adapters found, return None
-    return None
-
-
-def get_sample_libraries(sample):
-    return units.loc[sample]["library"].unique()
-
-
-def get_sample_library_lanes(sample, library):
-    return units.loc[(sample, library)].lane.unique()
+def is_lane_pe(sample, library, lane):
+    return units.loc[sample, library, lane].seq_type in ["pe", "hic"]
 
 
 def get_sample_library_lane_data(sample, library, lane):
     return expand(units.loc[(sample, library, lane)].data, Read=["1", "2"])
-
-
-def is_lane_pe(sample, library, lane):
-    return get_units_pe().index.isin([(sample, library, lane)]).any()
 
 
 def get_read_type_trim(read_type_map):
@@ -120,17 +60,17 @@ def get_read_type_map(sample, library, lane):
 
     if is_lane_pe(sample, library, lane):
         read_type_map.append("pe")
-        if is_activated("reads/trim"):
-            trimmer = config["reads"]["trim"]["tool"]
+        if is_activated("trim"):
+            trimmer = config["trim"]["tool"]
 
             if trimmer == "adapterremoval":
                 read_type_map.append("singleton")
-                if is_activated("reads/collapse"):
+                if is_activated("collapse"):
                     read_type_map.append("collapsed")
                     read_type_map.append("collapsedtrunc")
             elif trimmer == "fastp":
                 read_type_map.append("singleton")
-                if is_activated("reads/collapse"):
+                if is_activated("collapse"):
                     read_type_map.append("collapsed")
             elif trimmer == "bbduk":
                 read_type_map.append("singleton")
