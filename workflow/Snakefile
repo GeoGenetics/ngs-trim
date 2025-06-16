@@ -3,7 +3,7 @@ import pandas as pd
 snakemake.utils.min_version("9.0.0")
 
 # Define wrapper versions
-wrapper_ver = "v6.0.1"
+wrapper_ver = "v7.0.0"
 
 # Default value for testing purposes
 units = config.get(
