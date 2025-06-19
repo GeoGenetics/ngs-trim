@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.3](https://github.com/GeoGenetics/ngs-trim/compare/v0.5.2...v0.5.3) (2025-06-19)
+
+
+### Bug Fixes
+
+* validation URL and schema ([#5](https://github.com/GeoGenetics/ngs-trim/issues/5)) ([363eff4](https://github.com/GeoGenetics/ngs-trim/commit/363eff46fcb56e8e09e8a7538ce0e0e098e1401f))
+
 ## [0.5.2](https://github.com/GeoGenetics/ngs-trim/compare/v0.5.1...v0.5.2) (2025-06-16)
 
 
