@@ -139,8 +139,8 @@ elif config["trim"]["tool"] == "adapterremoval":
         priority: 10
         threads: 10
         resources:
-            mem=lambda w, attempt: f"{15* attempt} GiB",
-            runtime=lambda w, attempt: f"{3* attempt} h",
+            mem=lambda w, attempt: f"{0.5* attempt} GiB",
+            runtime=lambda w, input, attempt: f"{(0.06* input.size_gb+1)* attempt} h",
         wrapper:
             f"{wrapper_ver}/bio/adapterremoval"
 
