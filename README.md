@@ -1,6 +1,7 @@
 # NGS Trim - a generic module for read trimming
 
-[![Snakemake](https://img.shields.io/badge/snakemake-≥8.11.2-brightgreen.svg)](https://snakemake.readthedocs.io/en/stable/)
+[![Snakemake](https://img.shields.io/badge/snakemake-≥9.0.0-brightgreen.svg)](https://snakemake.readthedocs.io/en/stable/)
+![CI](https://github.com/GeoGenetics/ngs-trim/actions/workflows/ci.yml/badge.svg)
 
 This module performs NGS trimming steps:
 - Read trimming:
