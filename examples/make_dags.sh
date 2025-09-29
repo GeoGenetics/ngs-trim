@@ -10,7 +10,7 @@ do
     snakemake $SNAKEMAKE_OPTS --filegraph | dot -Tsvg > filegraph.svg
     snakemake $SNAKEMAKE_OPTS --dag | dot -Tsvg > dag.svg
 
-    #snakemake -j 10 $SNAKEMAKE_OPTS --conda-prefix /projects/caeg/apps/cache/conda/ --notemp
+    #snakemake -j 10 $SNAKEMAKE_OPTS --notemp
     #snakemake $SNAKEMAKE_OPTS --generate-unit-tests
     pytest -p no:cacheprovider .tests/unit/
     cd ../
