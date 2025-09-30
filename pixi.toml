@@ -1,23 +1,22 @@
 [project]
 channels = ["conda-forge", "bioconda", "nodefaults"]
-name = "ngs-taxon"
+name = "ngs-trim"
 platforms = ["linux-64"]
-version = "0.8.0"
+version = "0.5.4"
 
 [tasks]
 
 [dependencies]
 snakemake = ">=9.0.1,<10"
-snakemake-executor-plugin-slurm = ">=1.1.0,<2"
+snakemake-storage-plugin-http = ">=0.3.0,<1"
 conda = ">=25.1.1,<26"
 
 [environments]
-test = { features = ["test"], no-default-feature = true }
+test = { features = ["test"] }
 format = { features = ["format"], no-default-feature = true }
 
 [feature.test.dependencies]
-snakemake = ">=9.0.1,<10"
-conda = ">=25.1.1,<26"
+graphviz = "*"
 
 [feature.format.dependencies]
 black = "*"
