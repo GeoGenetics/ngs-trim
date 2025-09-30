@@ -189,9 +189,9 @@ elif config["trim"]["tool"] == "fastp":
             extra=lambda w: config["trim"]["params"]
             + (
                 " --adapter_sequence {} --adapter_sequence_r2 {} ".format(
-                        *get_adapters(w)
-                    )
-                    if get_adapters(w)
+                    *get_adapters(w)
+                )
+                if get_adapters(w)
                 else " "
             )
             + (config["collapse"]["params"] if is_activated("collapse") else " "),
