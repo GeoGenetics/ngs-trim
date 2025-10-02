@@ -1,5 +1,5 @@
 """
-Common code for unit testing of rules generated with Snakemake 9.11.2.
+Common code for unit testing of rules generated with Snakemake 9.11.6.
 """
 
 import os

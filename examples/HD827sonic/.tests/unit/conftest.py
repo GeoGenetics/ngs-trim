@@ -1,5 +1,5 @@
 """
-conftest.py for unit testing of rules generated with Snakemake 9.11.2.
+conftest.py for unit testing of rules generated with Snakemake 9.11.6.
 """
 
 from pytest import fixture
