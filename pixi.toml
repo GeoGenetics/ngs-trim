@@ -16,6 +16,7 @@ test = { features = ["test"] }
 format = { features = ["format"], no-default-feature = true }
 
 [feature.test.dependencies]
+pytest = "*"
 graphviz = "*"
 
 [feature.format.dependencies]
