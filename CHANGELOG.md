@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.4](https://github.com/GeoGenetics/ngs-trim/compare/v0.5.3...v0.5.4) (2025-11-12)
+
+
+### Performance Improvements
+
+* adjust resources ([#7](https://github.com/GeoGenetics/ngs-trim/issues/7)) ([6e5368b](https://github.com/GeoGenetics/ngs-trim/commit/6e5368b487d9d6e61aefc0b5d6b2c1d22ab8287b))
+
 ## [0.5.3](https://github.com/GeoGenetics/ngs-trim/compare/v0.5.2...v0.5.3) (2025-06-19)
 
 
