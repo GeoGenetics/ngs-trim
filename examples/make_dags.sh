@@ -12,6 +12,8 @@ do
     snakemake $SNAKEMAKE_OPTS --filegraph | dot -Tsvg > filegraph.svg
     snakemake $SNAKEMAKE_OPTS --dag | dot -Tsvg > dag.svg
 
-    pytest -p no:cacheprovider .tests/unit/
+    if [ -d .tests/unit/ ]; then
+        pytest -p no:cacheprovider .tests/unit/
+    fi
     cd ../
 done
