@@ -3,14 +3,14 @@ import pandas as pd
 snakemake.utils.min_version("9.0.0")
 
 # Define wrapper versions
-wrapper_ver = "v7.6.0"
+wrapper_ver = "v7.9.1"
 
 ######################
 ### Validate Input ###
 ######################
 from urllib.parse import urlparse, urlunparse
 
-baseurl = urlparse(workflow.current_basedir.get_path_or_uri())
+baseurl = urlparse(workflow.current_basedir.get_path_or_uri(secret_free=True))
 # Units (default value for testing purposes)
 units = config.get(
     "units",
