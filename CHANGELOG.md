@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.5](https://github.com/GeoGenetics/ngs-trim/compare/v0.5.4...v0.5.5) (2025-11-13)
+
+
+### Bug Fixes
+
+* Update pixi env and bump wrapper ver ([#14](https://github.com/GeoGenetics/ngs-trim/issues/14)) ([b30f22d](https://github.com/GeoGenetics/ngs-trim/commit/b30f22d78831b40143d8d62172525923997ac24d))
+
 ## [0.5.4](https://github.com/GeoGenetics/ngs-trim/compare/v0.5.3...v0.5.4) (2025-11-12)
 
 
