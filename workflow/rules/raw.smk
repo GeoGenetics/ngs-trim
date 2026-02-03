@@ -78,4 +78,4 @@ rule fastqc_raw:
         mem=lambda w, attempt: f"{5* attempt} GiB",
         runtime=lambda w, attempt: f"{2* attempt} h",
     wrapper:
-        f"{wrapper_ver}/bio/fastqc"
+        "v7.9.1/bio/fastqc"
