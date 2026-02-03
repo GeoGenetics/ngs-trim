@@ -3,7 +3,7 @@ import pandas as pd
 snakemake.utils.min_version("9.13.5")
 
 # Define wrapper versions
-wrapper_ver = "v7.9.1"
+wrapper_ver = "v9.0.0"
 
 ######################
 ### Validate Input ###
