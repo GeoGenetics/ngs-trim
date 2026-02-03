@@ -75,7 +75,7 @@ rule fastqc_raw:
         "benchmarks/reads/fastqc/raw/{sample}_{library}_{lane}_{read_type_raw}.jsonl"
     threads: 4
     resources:
-        mem=lambda w, attempt: f"{5* attempt} GiB",
-        runtime=lambda w, attempt: f"{2* attempt} h",
+        mem=lambda w, attempt: f"{3* attempt} GiB",
+        runtime=lambda w, attempt: f"{0.5* attempt} h",
     wrapper:
         "v7.9.1/bio/fastqc"
