@@ -84,7 +84,7 @@ rule multiqc:
     log:
         "logs/reports/multiqc.log",
     benchmark:
-        "benchmarks/reports/multiqc.log"
+        "benchmarks/reports/multiqc.jsonl"
     params:
         extra="--force --clean-up " + config.get("report", {}).get("multiqc", ""),
     localrule: True
