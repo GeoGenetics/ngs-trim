@@ -2,9 +2,6 @@ import pandas as pd
 
 snakemake.utils.min_version("9.13.5")
 
-# Define wrapper versions
-wrapper_ver = "v7.9.1"
-
 ######################
 ### Validate Input ###
 ######################
@@ -96,7 +93,7 @@ rule multiqc:
         mem=lambda w, attempt: f"{10* attempt} GiB",
         runtime=lambda w, attempt: f"{30* attempt} m",
     wrapper:
-        f"{wrapper_ver}/bio/multiqc"
+        "v7.9.1/bio/multiqc"
 
 
 rule all:
