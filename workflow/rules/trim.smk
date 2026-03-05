@@ -75,7 +75,7 @@ if config["trim"]["tool"] == "cutadapt":
             mem=lambda w, attempt: f"{15* attempt} GiB",
             runtime=lambda w, attempt: f"{5* attempt} h",
         wrapper:
-            "v7.9.1/bio/cutadapt/pe"
+            "v7.9.0/bio/cutadapt/pe"
 
     rule cutadapt_fastq_se:
         input:
@@ -100,7 +100,7 @@ if config["trim"]["tool"] == "cutadapt":
             mem=lambda w, attempt: f"{15* attempt} GiB",
             runtime=lambda w, attempt: f"{5* attempt} h",
         wrapper:
-            "v7.9.1/bio/cutadapt/se"
+            "v7.9.0/bio/cutadapt/se"
 
 elif config["trim"]["tool"] == "adapterremoval":
 
@@ -137,12 +137,12 @@ elif config["trim"]["tool"] == "adapterremoval":
             )
             + (config["collapse"]["params"] if is_activated("collapse") else " "),
         priority: 10
-        threads: 10
+        threads: 4
         resources:
             mem=lambda w, attempt: f"{0.3* attempt} GiB",
             runtime=lambda w, input, attempt: f"{(0.06* input.size_gb+0.3)* attempt} h",
         wrapper:
-            "v7.9.1/bio/adapterremoval"
+            "v4.4.0/bio/adapterremoval"
 
     use rule adapterremoval_fastq_pe as adapterremoval_fastq_se with:
         output:
@@ -261,7 +261,7 @@ elif config["trim"]["tool"] == "trimmomatic":
             mem=lambda w, attempt: f"{15* attempt} GiB",
             runtime=lambda w, attempt: f"{2* attempt} h",
         wrapper:
-            "v7.9.1/bio/trimmomatic/pe"
+            "v7.6.1/bio/trimmomatic"
 
     rule trimmomatic_fastq_se:
         input:
@@ -289,7 +289,7 @@ elif config["trim"]["tool"] == "trimmomatic":
             mem=lambda w, attempt: f"{15* attempt} GiB",
             runtime=lambda w, attempt: f"{2* attempt} h",
         wrapper:
-            "v7.9.1/bio/trimmomatic/se"
+            "v7.6.1/bio/trimmomatic"
 
 elif config["trim"]["tool"] == "bbduk":
 
@@ -314,6 +314,7 @@ elif config["trim"]["tool"] == "bbduk":
         benchmark:
             "benchmarks/reads/trim/{sample}_{library}_{lane}_pe.jsonl"
         params:
+            command="bbduk.sh",
             extra=lambda w: config["trim"]["params"]
             + (" literal={},{} ".format(*get_adapters(w)) if get_adapters(w) else " "),
         priority: 10
@@ -322,7 +323,7 @@ elif config["trim"]["tool"] == "bbduk":
             mem=lambda w, attempt: f"{20* attempt} GiB",
             runtime=lambda w, attempt: f"{30* attempt} m",
         wrapper:
-            "v7.9.1/bio/bbtools/bbduk"
+            "v8.0.3/bio/bbtools"
 
     use rule bbduk_fastq_pe as bbduk_fastq_se with:
         output:

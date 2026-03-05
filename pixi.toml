@@ -9,7 +9,7 @@ version = "0.5.6"
 [dependencies]
 snakemake = ">=9.0.1,<10"
 snakemake-storage-plugin-http = ">=0.3.0,<1"
-conda = ">=25.1.1,<26"
+conda = ">=25.1.1,<27"
 
 [environments]
 test = { features = ["test"] }
