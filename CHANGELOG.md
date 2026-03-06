@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.5.6](https://github.com/GeoGenetics/ngs-trim/compare/v0.5.5...v0.5.6) (2026-03-06)
+
+
+### Bug Fixes
+
+* MultiQC benchmark extension ([#19](https://github.com/GeoGenetics/ngs-trim/issues/19)) ([a35f5d9](https://github.com/GeoGenetics/ngs-trim/commit/a35f5d951a1053485f1ff314de6b5fcb08f29f1c))
+
+
+### Performance Improvements
+
+* Update env, QC wrappers, resources and unit tests ([#17](https://github.com/GeoGenetics/ngs-trim/issues/17)) ([0ff5db5](https://github.com/GeoGenetics/ngs-trim/commit/0ff5db5d4e3b7fe9a688f4c4dce8e930aa6d32cf))
+* update QC wrappers ([#20](https://github.com/GeoGenetics/ngs-trim/issues/20)) ([33a919a](https://github.com/GeoGenetics/ngs-trim/commit/33a919a45a0b2f4772d7d548289c19896ee61b97))
+
 ## [0.5.5](https://github.com/GeoGenetics/ngs-trim/compare/v0.5.4...v0.5.5) (2025-11-13)
 
 
