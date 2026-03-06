@@ -1,7 +1,6 @@
 """
-Rule test code for unit testing of rules generated with Snakemake 9.11.6.
+Rule test code for unit testing of rules generated with Snakemake 9.16.4.dev3.
 """
-
 
 import os
 import sys
@@ -33,6 +32,12 @@ def test_adapterremoval_fastq_pe(conda_prefix):
                 "python",
                 "-m",
                 "snakemake",
+                "results/reads/trim/HD827sonic_1_lib1_L001_collapsed.fastq.gz",
+                "results/reads/trim/HD827sonic_1_lib1_L001_collapsedtrunc.fastq.gz",
+                "results/reads/trim/HD827sonic_1_lib1_L001_R1.fastq.gz",
+                "results/reads/trim/HD827sonic_1_lib1_L001_R2.fastq.gz",
+                "results/reads/trim/HD827sonic_1_lib1_L001_singleton.fastq.gz",
+                "results/reads/trim/HD827sonic_1_lib1_L001_discarded.fastq.gz",
                 "stats/reads/trim/HD827sonic_1_lib1_L001_pe.settings",
                 "--snakefile",
                 "../../workflow/Snakefile",
@@ -55,7 +60,10 @@ def test_adapterremoval_fastq_pe(conda_prefix):
 
         # Check the output byte by byte using cmp/zmp/bzcmp/xzcmp.
         # To modify this behavior, you can inherit from common.OutputChecker in here
-        # and overwrite the method `compare_files(generated_file, expected_file), 
+        # and overwrite the method `compare_files(generated_file, expected_file),
         # also see common.py.
         import common
-        common.OutputChecker(data_path, expected_path, workdir).check()
+
+        common.OutputChecker(data_path, expected_path, workdir).check(
+            {".settings": ["diff", "--ignore-matching-lines=RNG"]}
+        )
