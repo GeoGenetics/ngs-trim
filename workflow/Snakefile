@@ -40,8 +40,8 @@ snakemake.utils.validate(
 #####################
 pathvars:
     reports="reports",
-    temp="temp",
     stats="stats",
+    temp="temp",
 
 
 include: "rules/utils.smk"
