@@ -37,9 +37,9 @@ wildcard_constraints:
 
 rule adapters_to_file:
     output:
-        fas=temp("<temp>/reads/trim/adapters/{sample}_{library}_{lane}.adapters.fas"),
+        fas=temp("<temp>/<reads>/trim/adapters/{sample}_{library}_{lane}.adapters.fas"),
     log:
-        "<logs>/reads/trim/adapters/{sample}_{library}_{lane}.log",
+        "<logs>/<reads>/trim/adapters/{sample}_{library}_{lane}.log",
     params:
         adapters=get_adapters,
     run:
@@ -59,13 +59,13 @@ if config["trim"]["tool"] == "cutadapt":
                 allow_missing=True,
             ),
         output:
-            fastq1="<results>/reads/trim/{sample}_{library}_{lane}_R1.fastq.gz",
-            fastq2="<results>/reads/trim/{sample}_{library}_{lane}_R2.fastq.gz",
-            qc="<stats>/reads/trim/{sample}_{library}_{lane}_pe.qc.txt",
+            fastq1="<results>/<reads>/trim/{sample}_{library}_{lane}_R1.fastq.gz",
+            fastq2="<results>/<reads>/trim/{sample}_{library}_{lane}_R2.fastq.gz",
+            qc="<stats>/<reads>/trim/{sample}_{library}_{lane}_pe.qc.txt",
         log:
-            "<logs>/reads/trim/{sample}_{library}_{lane}_pe.log",
+            "<logs>/<reads>/trim/{sample}_{library}_{lane}_pe.log",
         benchmark:
-            "<benchmarks>/reads/trim/{sample}_{library}_{lane}_pe.jsonl"
+            "<benchmarks>/<reads>/trim/{sample}_{library}_{lane}_pe.jsonl"
         params:
             extra=lambda w: config["trim"]["params"]
             + (" -a {} -A {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
@@ -85,12 +85,12 @@ if config["trim"]["tool"] == "cutadapt":
                 allow_missing=True,
             ),
         output:
-            fastq="<results>/reads/trim/{sample}_{library}_{lane}_R.fastq.gz",
-            qc="<stats>/reads/trim/{sample}_{library}_{lane}_se.qc.txt",
+            fastq="<results>/<reads>/trim/{sample}_{library}_{lane}_R.fastq.gz",
+            qc="<stats>/<reads>/trim/{sample}_{library}_{lane}_se.qc.txt",
         log:
-            "<logs>/reads/trim/{sample}_{library}_{lane}_se.log",
+            "<logs>/<reads>/trim/{sample}_{library}_{lane}_se.log",
         benchmark:
-            "<benchmarks>/reads/trim/{sample}_{library}_{lane}_se.jsonl"
+            "<benchmarks>/<reads>/trim/{sample}_{library}_{lane}_se.jsonl"
         params:
             extra=lambda w: config["trim"]["params"]
             + (" -a {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
@@ -106,8 +106,8 @@ elif config["trim"]["tool"] == "adapterremoval":
 
     def _collapsed_input():
         return {
-            "collapsed": "<results>/reads/trim/{sample}_{library}_{lane}_collapsed.fastq.gz",
-            "collapsed_trunc": "<results>/reads/trim/{sample}_{library}_{lane}_collapsedtrunc.fastq.gz",
+            "collapsed": "<results>/<reads>/trim/{sample}_{library}_{lane}_collapsed.fastq.gz",
+            "collapsed_trunc": "<results>/<reads>/trim/{sample}_{library}_{lane}_collapsedtrunc.fastq.gz",
         }
 
     rule adapterremoval_fastq_pe:
@@ -119,15 +119,15 @@ elif config["trim"]["tool"] == "adapterremoval":
             ),
         output:
             **_collapsed_input() if is_activated("collapse") else {},
-            fq1="<results>/reads/trim/{sample}_{library}_{lane}_R1.fastq.gz",
-            fq2="<results>/reads/trim/{sample}_{library}_{lane}_R2.fastq.gz",
-            singleton="<results>/reads/trim/{sample}_{library}_{lane}_singleton.fastq.gz",
-            discarded="<results>/reads/trim/{sample}_{library}_{lane}_discarded.fastq.gz",
-            settings="<stats>/reads/trim/{sample}_{library}_{lane}_pe.settings",
+            fq1="<results>/<reads>/trim/{sample}_{library}_{lane}_R1.fastq.gz",
+            fq2="<results>/<reads>/trim/{sample}_{library}_{lane}_R2.fastq.gz",
+            singleton="<results>/<reads>/trim/{sample}_{library}_{lane}_singleton.fastq.gz",
+            discarded="<results>/<reads>/trim/{sample}_{library}_{lane}_discarded.fastq.gz",
+            settings="<stats>/<reads>/trim/{sample}_{library}_{lane}_pe.settings",
         log:
-            "<logs>/reads/trim/{sample}_{library}_{lane}_pe.log",
+            "<logs>/<reads>/trim/{sample}_{library}_{lane}_pe.log",
         benchmark:
-            "<benchmarks>/reads/trim/{sample}_{library}_{lane}_pe.jsonl"
+            "<benchmarks>/<reads>/trim/{sample}_{library}_{lane}_pe.jsonl"
         params:
             extra=lambda w: config["trim"]["params"]
             + (
@@ -146,13 +146,13 @@ elif config["trim"]["tool"] == "adapterremoval":
 
     use rule adapterremoval_fastq_pe as adapterremoval_fastq_se with:
         output:
-            fq="<results>/reads/trim/{sample}_{library}_{lane}_R.fastq.gz",
-            discarded="<results>/reads/trim/{sample}_{library}_{lane}_discarded.fastq.gz",
-            settings="<stats>/reads/trim/{sample}_{library}_{lane}_se.settings",
+            fq="<results>/<reads>/trim/{sample}_{library}_{lane}_R.fastq.gz",
+            discarded="<results>/<reads>/trim/{sample}_{library}_{lane}_discarded.fastq.gz",
+            settings="<stats>/<reads>/trim/{sample}_{library}_{lane}_se.settings",
         log:
-            "<logs>/reads/trim/{sample}_{library}_{lane}_se.log",
+            "<logs>/<reads>/trim/{sample}_{library}_{lane}_se.log",
         benchmark:
-            "<benchmarks>/reads/trim/{sample}_{library}_{lane}_se.jsonl"
+            "<benchmarks>/<reads>/trim/{sample}_{library}_{lane}_se.jsonl"
         params:
             extra=lambda w: config["trim"]["params"]
             + (" --adapter1 {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
@@ -168,23 +168,23 @@ elif config["trim"]["tool"] == "fastp":
             ),
         output:
             trimmed=expand(
-                "<results>/reads/trim/{sample}_{library}_{lane}_{R}.fastq.gz",
+                "<results>/<reads>/trim/{sample}_{library}_{lane}_{R}.fastq.gz",
                 R=["R1", "R2"],
                 allow_missing=True,
             ),
-            unpaired="<results>/reads/trim/{sample}_{library}_{lane}_singleton.fastq.gz",
+            unpaired="<results>/<reads>/trim/{sample}_{library}_{lane}_singleton.fastq.gz",
             merged=(
-                "<results>/reads/trim/{sample}_{library}_{lane}_collapsed.fastq.gz"
+                "<results>/<reads>/trim/{sample}_{library}_{lane}_collapsed.fastq.gz"
                 if is_activated("collapse")
                 else []
             ),
-            failed="<results>/reads/trim/{sample}_{library}_{lane}_discarded.fastq.gz",
-            html="<stats>/reads/trim/{sample}_{library}_{lane}_pe.html",
-            json="<stats>/reads/trim/{sample}_{library}_{lane}_pe.json",
+            failed="<results>/<reads>/trim/{sample}_{library}_{lane}_discarded.fastq.gz",
+            html="<stats>/<reads>/trim/{sample}_{library}_{lane}_pe.html",
+            json="<stats>/<reads>/trim/{sample}_{library}_{lane}_pe.json",
         log:
-            "<logs>/reads/trim/{sample}_{library}_{lane}_pe.log",
+            "<logs>/<reads>/trim/{sample}_{library}_{lane}_pe.log",
         benchmark:
-            "<benchmarks>/reads/trim/{sample}_{library}_{lane}_pe.jsonl"
+            "<benchmarks>/<reads>/trim/{sample}_{library}_{lane}_pe.jsonl"
         params:
             extra=lambda w: config["trim"]["params"]
             + (
@@ -205,14 +205,14 @@ elif config["trim"]["tool"] == "fastp":
 
     use rule fastp_fastq_pe as fastp_fastq_se with:
         output:
-            trimmed="<results>/reads/trim/{sample}_{library}_{lane}_R.fastq.gz",
-            failed="<results>/reads/trim/{sample}_{library}_{lane}_discarded.fastq.gz",
-            html="<stats>/reads/trim/{sample}_{library}_{lane}_se.html",
-            json="<stats>/reads/trim/{sample}_{library}_{lane}_se.json",
+            trimmed="<results>/<reads>/trim/{sample}_{library}_{lane}_R.fastq.gz",
+            failed="<results>/<reads>/trim/{sample}_{library}_{lane}_discarded.fastq.gz",
+            html="<stats>/<reads>/trim/{sample}_{library}_{lane}_se.html",
+            json="<stats>/<reads>/trim/{sample}_{library}_{lane}_se.json",
         log:
-            "<logs>/reads/trim/{sample}_{library}_{lane}_se.log",
+            "<logs>/<reads>/trim/{sample}_{library}_{lane}_se.log",
         benchmark:
-            "<benchmarks>/reads/trim/{sample}_{library}_{lane}_se.jsonl"
+            "<benchmarks>/<reads>/trim/{sample}_{library}_{lane}_se.jsonl"
         params:
             extra=lambda w: config["trim"]["params"]
             + (
@@ -241,15 +241,15 @@ elif config["trim"]["tool"] == "trimmomatic":
             ),
             adapt=rules.adapters_to_file.output.fas,
         output:
-            r1="<results>/reads/trim/{sample}_{library}_{lane}_R1.fastq.gz",
-            r2="<results>/reads/trim/{sample}_{library}_{lane}_R2.fastq.gz",
-            r1_unpaired="<results>/reads/trim/{sample}_{library}_{lane}_singleton1.fastq.gz",
-            r2_unpaired="<results>/reads/trim/{sample}_{library}_{lane}_singleton2.fastq.gz",
-            trim_log="<stats>/reads/trim/{sample}_{library}_{lane}_pe.log",
+            r1="<results>/<reads>/trim/{sample}_{library}_{lane}_R1.fastq.gz",
+            r2="<results>/<reads>/trim/{sample}_{library}_{lane}_R2.fastq.gz",
+            r1_unpaired="<results>/<reads>/trim/{sample}_{library}_{lane}_singleton1.fastq.gz",
+            r2_unpaired="<results>/<reads>/trim/{sample}_{library}_{lane}_singleton2.fastq.gz",
+            trim_log="<stats>/<reads>/trim/{sample}_{library}_{lane}_pe.log",
         log:
-            "<logs>/reads/trim/{sample}_{library}_{lane}_pe.log",
+            "<logs>/<reads>/trim/{sample}_{library}_{lane}_pe.log",
         benchmark:
-            "<benchmarks>/reads/trim/{sample}_{library}_{lane}_pe.jsonl"
+            "<benchmarks>/<reads>/trim/{sample}_{library}_{lane}_pe.jsonl"
         params:
             extra=lambda w, output: f"-trimlog {output.trim_log}",
             trimmer=lambda w, input: [
@@ -272,12 +272,12 @@ elif config["trim"]["tool"] == "trimmomatic":
             ),
             adapt=rules.adapters_to_file.output.fas,
         output:
-            fq="<results>/reads/trim/{sample}_{library}_{lane}_R.fastq.gz",
-            trim_log="<stats>/reads/trim/{sample}_{library}_{lane}_se.log",
+            fq="<results>/<reads>/trim/{sample}_{library}_{lane}_R.fastq.gz",
+            trim_log="<stats>/<reads>/trim/{sample}_{library}_{lane}_se.log",
         log:
-            "<logs>/reads/trim/{sample}_{library}_{lane}_se.log",
+            "<logs>/<reads>/trim/{sample}_{library}_{lane}_se.log",
         benchmark:
-            "<benchmarks>/reads/trim/{sample}_{library}_{lane}_se.jsonl"
+            "<benchmarks>/<reads>/trim/{sample}_{library}_{lane}_se.jsonl"
         params:
             extra=lambda w, output: f"-trimlog {output.trim_log}",
             trimmer=lambda w, input: [
@@ -302,17 +302,17 @@ elif config["trim"]["tool"] == "bbduk":
             ),
         output:
             trimmed=expand(
-                "<results>/reads/trim/{sample}_{library}_{lane}_{R}.fastq.gz",
+                "<results>/<reads>/trim/{sample}_{library}_{lane}_{R}.fastq.gz",
                 R=["R1", "R2"],
                 allow_missing=True,
             ),
-            singleton="<results>/reads/trim/{sample}_{library}_{lane}_singleton.fastq.gz",
-            discarded="<results>/reads/trim/{sample}_{library}_{lane}_discarded.fastq.gz",
-            stats="<stats>/reads/trim/{sample}_{library}_{lane}_pe.stats.txt",
+            singleton="<results>/<reads>/trim/{sample}_{library}_{lane}_singleton.fastq.gz",
+            discarded="<results>/<reads>/trim/{sample}_{library}_{lane}_discarded.fastq.gz",
+            stats="<stats>/<reads>/trim/{sample}_{library}_{lane}_pe.stats.txt",
         log:
-            "<logs>/reads/trim/{sample}_{library}_{lane}_pe.log",
+            "<logs>/<reads>/trim/{sample}_{library}_{lane}_pe.log",
         benchmark:
-            "<benchmarks>/reads/trim/{sample}_{library}_{lane}_pe.jsonl"
+            "<benchmarks>/<reads>/trim/{sample}_{library}_{lane}_pe.jsonl"
         params:
             command="bbduk.sh",
             extra=lambda w: config["trim"]["params"]
@@ -327,13 +327,13 @@ elif config["trim"]["tool"] == "bbduk":
 
     use rule bbduk_fastq_pe as bbduk_fastq_se with:
         output:
-            trimmed="<results>/reads/trim/{sample}_{library}_{lane}_R.fastq.gz",
-            discarded="<results>/reads/trim/{sample}_{library}_{lane}_discarded.fastq.gz",
-            stats="<stats>/reads/trim/{sample}_{library}_{lane}_se.stats.txt",
+            trimmed="<results>/<reads>/trim/{sample}_{library}_{lane}_R.fastq.gz",
+            discarded="<results>/<reads>/trim/{sample}_{library}_{lane}_discarded.fastq.gz",
+            stats="<stats>/<reads>/trim/{sample}_{library}_{lane}_se.stats.txt",
         log:
-            "<logs>/reads/trim/{sample}_{library}_{lane}_se.log",
+            "<logs>/<reads>/trim/{sample}_{library}_{lane}_se.log",
         benchmark:
-            "<benchmarks>/reads/trim/{sample}_{library}_{lane}_se.jsonl"
+            "<benchmarks>/<reads>/trim/{sample}_{library}_{lane}_se.jsonl"
         params:
             extra=lambda w: config["trim"]["params"]
             + (" literal={} ".format(*get_adapters(w)) if get_adapters(w) else " "),
@@ -346,11 +346,11 @@ elif config["trim"]["tool"] == "bbduk":
 
 use rule fastqc_raw as fastqc_trim with:
     input:
-        fq="<results>/reads/trim/{sample}_{library}_{lane}_{read_type_trim}.fastq.gz",
+        fq="<results>/<reads>/trim/{sample}_{library}_{lane}_{read_type_trim}.fastq.gz",
     output:
-        html="<stats>/reads/fastqc/trim/{sample}_{library}_{lane}_{read_type_trim}.html",
-        zip="<stats>/reads/fastqc/trim/{sample}_{library}_{lane}_{read_type_trim}_fastqc.zip",
+        html="<stats>/<reads>/fastqc/trim/{sample}_{library}_{lane}_{read_type_trim}.html",
+        zip="<stats>/<reads>/fastqc/trim/{sample}_{library}_{lane}_{read_type_trim}_fastqc.zip",
     log:
-        "<logs>/reads/fastqc/trim/{sample}_{library}_{lane}_{read_type_trim}.log",
+        "<logs>/<reads>/fastqc/trim/{sample}_{library}_{lane}_{read_type_trim}.log",
     benchmark:
-        "<benchmarks>/reads/fastqc/trim/{sample}_{library}_{lane}_{read_type_trim}.jsonl"
+        "<benchmarks>/<reads>/fastqc/trim/{sample}_{library}_{lane}_{read_type_trim}.jsonl"
