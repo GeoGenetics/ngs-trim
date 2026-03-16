@@ -44,7 +44,7 @@ rule get_fastq_raw:
     input:
         _get_input_data,
     output:
-        "results/reads/raw/{sample}_{library}_{lane}_{read_type_raw}.fastq.gz",
+        "<results>/reads/raw/{sample}_{library}_{lane}_{read_type_raw}.fastq.gz",
     localrule: True
     threads: 1
     run:
@@ -67,12 +67,12 @@ rule fastqc_raw:
     input:
         rules.get_fastq_raw.output,
     output:
-        html="stats/reads/fastqc/raw/{sample}_{library}_{lane}_{read_type_raw}.html",
-        zip="stats/reads/fastqc/raw/{sample}_{library}_{lane}_{read_type_raw}_fastqc.zip",
+        html="<stats>/reads/fastqc/raw/{sample}_{library}_{lane}_{read_type_raw}.html",
+        zip="<stats>/reads/fastqc/raw/{sample}_{library}_{lane}_{read_type_raw}_fastqc.zip",
     log:
-        "logs/reads/fastqc/raw/{sample}_{library}_{lane}_{read_type_raw}.log",
+        "<logs>/reads/fastqc/raw/{sample}_{library}_{lane}_{read_type_raw}.log",
     benchmark:
-        "benchmarks/reads/fastqc/raw/{sample}_{library}_{lane}_{read_type_raw}.jsonl"
+        "<benchmarks>/reads/fastqc/raw/{sample}_{library}_{lane}_{read_type_raw}.jsonl"
     threads: 4
     resources:
         mem=lambda w, attempt: f"{3* attempt} GiB",
