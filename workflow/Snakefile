@@ -42,7 +42,6 @@ pathvars:
     reports="reports",
     stats="stats",
     temp="temp",
-    reads="reads",
 
 
 include: "rules/utils.smk"
@@ -108,7 +107,7 @@ rule all:
         qc=rules.multiqc.output.html,
         res=(
             expand_pd(
-                "<results>/<reads>/trim/{sample}_{library}_{lane}_{read_type_trim}.fastq.gz",
+                "<results>/reads/trim/{sample}_{library}_{lane}_{read_type_trim}.fastq.gz",
                 units.explode("read_type_trim"),
             )
             if is_activated("trim")
