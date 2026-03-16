@@ -53,7 +53,9 @@ rule get_fastq_raw:
         src = Path(input[0])
         dst = Path(output[0])
         if src.suffix != ".gz":
-            raise ValueError("Input FASTQ files is not GZip'ed: {}!".format(input[0]))
+            raise ValueError(
+                "Input FASTQ files is not GZip'ed: {}!".format(input[0])
+            )
 
         with gzip.open(src, "rb") as f:
             f.read(2)
