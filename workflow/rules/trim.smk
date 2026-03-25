@@ -66,14 +66,14 @@ if config["trim"]["tool"] == "cutadapt":
             "<logs>/reads/trim/{sample}_{library}_{lane}_pe.log",
         benchmark:
             "<benchmarks>/reads/trim/{sample}_{library}_{lane}_pe.jsonl"
-        params:
-            extra=lambda w: config["trim"]["params"]
-            + (" -a {} -A {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
         priority: 10
         threads: 10
         resources:
             mem=lambda w, attempt: f"{15* attempt} GiB",
             runtime=lambda w, attempt: f"{5* attempt} h",
+        params:
+            extra=lambda w: config["trim"]["params"]
+            + (" -a {} -A {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
         wrapper:
             "v7.9.0/bio/cutadapt/pe"
 
@@ -91,14 +91,14 @@ if config["trim"]["tool"] == "cutadapt":
             "<logs>/reads/trim/{sample}_{library}_{lane}_se.log",
         benchmark:
             "<benchmarks>/reads/trim/{sample}_{library}_{lane}_se.jsonl"
-        params:
-            extra=lambda w: config["trim"]["params"]
-            + (" -a {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
         priority: 10
         threads: 10
         resources:
             mem=lambda w, attempt: f"{15* attempt} GiB",
             runtime=lambda w, attempt: f"{5* attempt} h",
+        params:
+            extra=lambda w: config["trim"]["params"]
+            + (" -a {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
         wrapper:
             "v7.9.0/bio/cutadapt/se"
 
@@ -128,6 +128,11 @@ elif config["trim"]["tool"] == "adapterremoval":
             "<logs>/reads/trim/{sample}_{library}_{lane}_pe.log",
         benchmark:
             "<benchmarks>/reads/trim/{sample}_{library}_{lane}_pe.jsonl"
+        priority: 10
+        threads: 4
+        resources:
+            mem=lambda w, attempt: f"{0.3* attempt} GiB",
+            runtime=lambda w, input, attempt: f"{(0.06* input.size_gb+0.3)* attempt} h",
         params:
             extra=lambda w: config["trim"]["params"]
             + (
@@ -136,11 +141,6 @@ elif config["trim"]["tool"] == "adapterremoval":
                 else " "
             )
             + (config["collapse"]["params"] if is_activated("collapse") else " "),
-        priority: 10
-        threads: 4
-        resources:
-            mem=lambda w, attempt: f"{0.3* attempt} GiB",
-            runtime=lambda w, input, attempt: f"{(0.06* input.size_gb+0.3)* attempt} h",
         wrapper:
             "v4.4.0/bio/adapterremoval"
 
@@ -185,6 +185,11 @@ elif config["trim"]["tool"] == "fastp":
             "<logs>/reads/trim/{sample}_{library}_{lane}_pe.log",
         benchmark:
             "<benchmarks>/reads/trim/{sample}_{library}_{lane}_pe.jsonl"
+        priority: 10
+        threads: 10
+        resources:
+            mem=lambda w, attempt: f"{20* attempt} GiB",
+            runtime=lambda w, attempt: f"{30* attempt} m",
         params:
             extra=lambda w: config["trim"]["params"]
             + (
@@ -195,11 +200,6 @@ elif config["trim"]["tool"] == "fastp":
                 else " "
             )
             + (config["collapse"]["params"] if is_activated("collapse") else " "),
-        priority: 10
-        threads: 10
-        resources:
-            mem=lambda w, attempt: f"{20* attempt} GiB",
-            runtime=lambda w, attempt: f"{30* attempt} m",
         wrapper:
             "v7.9.1/bio/fastp"
 
@@ -250,16 +250,16 @@ elif config["trim"]["tool"] == "trimmomatic":
             "<logs>/reads/trim/{sample}_{library}_{lane}_pe.log",
         benchmark:
             "<benchmarks>/reads/trim/{sample}_{library}_{lane}_pe.jsonl"
-        params:
-            extra=lambda w, output: f"-trimlog {output.trim_log}",
-            trimmer=lambda w, input: [
-                config["trim"]["params"].format(ADAPTER_FASTA=input.adapt)
-            ],
         priority: 10
         threads: 10
         resources:
             mem=lambda w, attempt: f"{15* attempt} GiB",
             runtime=lambda w, attempt: f"{2* attempt} h",
+        params:
+            extra=lambda w, output: f"-trimlog {output.trim_log}",
+            trimmer=lambda w, input: [
+                config["trim"]["params"].format(ADAPTER_FASTA=input.adapt)
+            ],
         wrapper:
             "v7.6.1/bio/trimmomatic"
 
@@ -278,16 +278,16 @@ elif config["trim"]["tool"] == "trimmomatic":
             "<logs>/reads/trim/{sample}_{library}_{lane}_se.log",
         benchmark:
             "<benchmarks>/reads/trim/{sample}_{library}_{lane}_se.jsonl"
-        params:
-            extra=lambda w, output: f"-trimlog {output.trim_log}",
-            trimmer=lambda w, input: [
-                config["trim"]["params"].format(ADAPTER_FASTA=input.adapt)
-            ],
         priority: 10
         threads: 20
         resources:
             mem=lambda w, attempt: f"{15* attempt} GiB",
             runtime=lambda w, attempt: f"{2* attempt} h",
+        params:
+            extra=lambda w, output: f"-trimlog {output.trim_log}",
+            trimmer=lambda w, input: [
+                config["trim"]["params"].format(ADAPTER_FASTA=input.adapt)
+            ],
         wrapper:
             "v7.6.1/bio/trimmomatic"
 
@@ -313,15 +313,15 @@ elif config["trim"]["tool"] == "bbduk":
             "<logs>/reads/trim/{sample}_{library}_{lane}_pe.log",
         benchmark:
             "<benchmarks>/reads/trim/{sample}_{library}_{lane}_pe.jsonl"
-        params:
-            command="bbduk.sh",
-            extra=lambda w: config["trim"]["params"]
-            + (" literal={},{} ".format(*get_adapters(w)) if get_adapters(w) else " "),
         priority: 10
         threads: 10
         resources:
             mem=lambda w, attempt: f"{20* attempt} GiB",
             runtime=lambda w, attempt: f"{30* attempt} m",
+        params:
+            command="bbduk.sh",
+            extra=lambda w: config["trim"]["params"]
+            + (" literal={},{} ".format(*get_adapters(w)) if get_adapters(w) else " "),
         wrapper:
             "v8.0.3/bio/bbtools"
 

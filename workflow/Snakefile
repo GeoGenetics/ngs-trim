@@ -91,18 +91,19 @@ rule multiqc:
         "<logs>/<reports>/multiqc.log",
     benchmark:
         "<benchmarks>/<reports>/multiqc.jsonl"
-    params:
-        extra="--force --clean-up " + config.get("report", {}).get("multiqc", ""),
     localrule: True
     threads: 1
     resources:
         mem=lambda w, attempt: f"{10* attempt} GiB",
         runtime=lambda w, attempt: f"{30* attempt} m",
+    params:
+        extra="--force --clean-up " + config.get("report", {}).get("multiqc", ""),
     wrapper:
         "v8.1.1/bio/multiqc"
 
 
 rule all:
+    default_target: True
     input:
         qc=rules.multiqc.output.html,
         res=(
@@ -115,4 +116,3 @@ rule all:
         ),
     message:
         "Read trimming finished successfully!"
-    default_target: True
