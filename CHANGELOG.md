@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.7](https://github.com/GeoGenetics/ngs-trim/compare/v0.5.6...v0.5.7) (2026-03-27)
+
+
+### Bug Fixes
+
+* switch to pathvars ([#25](https://github.com/GeoGenetics/ngs-trim/issues/25)) ([f097e4e](https://github.com/GeoGenetics/ngs-trim/commit/f097e4e6863dfb4f33ab4b5633d691944a9b18c6))
+
 ## [0.5.6](https://github.com/GeoGenetics/ngs-trim/compare/v0.5.5...v0.5.6) (2026-03-06)
 
 
