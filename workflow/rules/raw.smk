@@ -56,7 +56,6 @@ rule get_fastq_raw:
             raise ValueError(
                 "Input FASTQ files is not GZip'ed: {}!".format(input[0])
             )
-
         with gzip.open(src, "rb") as f:
             f.read(2)
         dst.symlink_to(src.absolute())
