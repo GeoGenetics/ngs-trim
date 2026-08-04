@@ -131,7 +131,7 @@ elif config["trim"]["tool"] == "adapterremoval":
         priority: 10
         threads: 4
         resources:
-            mem=lambda w, attempt: f"{0.3* attempt} GiB",
+            mem=lambda w, attempt: f"{0.5* attempt} GiB",
             runtime=lambda w, input, attempt: f"{(0.06* input.size_gb+0.3)* attempt} h",
         params:
             extra=lambda w: config["trim"]["params"]
