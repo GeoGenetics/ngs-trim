@@ -4,7 +4,7 @@ set -euxo pipefail
 
 SNAKEMAKE_OPTS="--snakefile ../../workflow/Snakefile --configfile config/config.yaml --software-deployment-method conda --keep-storage-local-copies --forceall $@"
 
-for TEST in HD827sonic
+for TEST in HD827sonic empty
 do
     cd $TEST/
     snakemake $SNAKEMAKE_OPTS --dryrun
