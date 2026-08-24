@@ -93,7 +93,7 @@ rule multiqc:
     params:
         extra="--force --clean-up " + config.get("report", {}).get("multiqc", ""),
     wrapper:
-        "v8.1.1/bio/multiqc"
+        "v9.15.0/bio/multiqc"
 
 
 rule all:
