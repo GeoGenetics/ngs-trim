@@ -95,8 +95,8 @@
 <text text-anchor="start" x="425.5" y="-1045.8" font-family="sans" font-size="10.00" fill="#000000"> </text>
 <text text-anchor="start" x="429.5" y="-1045.8" font-family="sans" font-weight="bold" font-size="14.00" fill="#000000">output →</text>
 <text text-anchor="start" x="490.5" y="-1045.8" font-family="sans" font-size="10.00" fill="#000000"> </text>
-<text text-anchor="start" x="7.5" y="-1026" font-family="monospace" font-size="10.00" fill="#000000">stats/reads/fastqc/raw/{sample}_{library}_{lane}_{read_type_raw,R2|R1}.html</text>
-<text text-anchor="start" x="7.5" y="-1008" font-family="monospace" font-size="10.00" fill="#000000">stats/reads/fastqc/raw/{sample}_{library}_{lane}_{read_type_raw,R2|R1}_fastqc.zip</text>
+<text text-anchor="start" x="7.5" y="-1026" font-family="monospace" font-size="10.00" fill="#000000">stats/reads/fastqc/raw/{sample}_{library}_{lane}_{read_type_raw,R1|R2}.html</text>
+<text text-anchor="start" x="7.5" y="-1008" font-family="monospace" font-size="10.00" fill="#000000">stats/reads/fastqc/raw/{sample}_{library}_{lane}_{read_type_raw,R1|R2}_fastqc.zip</text>
 <polygon fill="#57d957" stroke="#57d957" points="1.5,-1100 1.5,-1100 501.5,-1100 501.5,-1100 1.5,-1100"/>
 <polygon fill="#57d957" stroke="#57d957" points="1.5,-1060 1.5,-1060 501.5,-1060 501.5,-1060 1.5,-1060"/>
 <polygon fill="none" stroke="#57d957" stroke-width="2" points="1,-999 1,-1129 500,-1129 500,-999 1,-999"/>
@@ -118,7 +118,7 @@
 <text text-anchor="start" x="739.5" y="-1453.8" font-family="sans" font-size="10.00" fill="#000000"> </text>
 <text text-anchor="start" x="743.5" y="-1453.8" font-family="sans" font-weight="bold" font-size="14.00" fill="#000000">output →</text>
 <text text-anchor="start" x="804.5" y="-1453.8" font-family="sans" font-size="10.00" fill="#000000"> </text>
-<text text-anchor="start" x="363.5" y="-1434" font-family="monospace" font-size="10.00" fill="#000000">results/reads/raw/{sample}_{library}_{lane}_{read_type_raw,R2|R1}.fastq.gz</text>
+<text text-anchor="start" x="363.5" y="-1434" font-family="monospace" font-size="10.00" fill="#000000">results/reads/raw/{sample}_{library}_{lane}_{read_type_raw,R1|R2}.fastq.gz</text>
 <polygon fill="#57d9d9" stroke="#57d9d9" points="357.5,-1508 357.5,-1508 815.5,-1508 815.5,-1508 357.5,-1508"/>
 <polygon fill="#57d9d9" stroke="#57d9d9" points="357.5,-1468 357.5,-1468 815.5,-1468 815.5,-1468 357.5,-1468"/>
 <polygon fill="none" stroke="#57d9d9" stroke-width="2" points="357,-1425 357,-1537 814,-1537 814,-1425 357,-1425"/>
@@ -164,7 +164,7 @@
 <polygon fill="#c0c0c0" stroke="#c0c0c0" stroke-width="2" points="1056.6038,-277.6786 1047.4401,-272.361 1051.2876,-282.2325 1056.6038,-277.6786"/>
 </g>
 <!-- 4&#45;&gt;1 -->
-<g id="edge4" class="edge">
+<g id="edge3" class="edge">
 <title>4&#45;&gt;1</title>
 <path fill="none" stroke="#c0c0c0" stroke-width="2" d="M570.6679,-1165.7112C561.9819,-1154.5401 554.4031,-1142.6218 548.5,-1130 523.6459,-1076.8582 535.3695,-1055.1784 548.5,-998 550.4931,-989.3207 552.7224,-980.6082 555.1595,-971.887"/>
 <polygon fill="#c0c0c0" stroke="#c0c0c0" stroke-width="2" points="558.5917,-972.6163 557.9978,-962.0382 551.8654,-970.6779 558.5917,-972.6163"/>
@@ -180,8 +180,8 @@
 <text text-anchor="start" x="1205.5" y="-1045.8" font-family="sans" font-size="10.00" fill="#000000"> </text>
 <text text-anchor="start" x="1209.5" y="-1045.8" font-family="sans" font-weight="bold" font-size="14.00" fill="#000000">output →</text>
 <text text-anchor="start" x="1270.5" y="-1045.8" font-family="sans" font-size="10.00" fill="#000000"> </text>
-<text text-anchor="start" x="565.5" y="-1026" font-family="monospace" font-size="10.00" fill="#000000">stats/reads/fastqc/trim/{sample}_{library}_{lane}_{read_type_trim,R1|collapsedtrunc|collapsed|singleton|R2}.html</text>
-<text text-anchor="start" x="565.5" y="-1008" font-family="monospace" font-size="10.00" fill="#000000">stats/reads/fastqc/trim/{sample}_{library}_{lane}_{read_type_trim,R1|collapsedtrunc|collapsed|singleton|R2}_fastqc.zip</text>
+<text text-anchor="start" x="565.5" y="-1026" font-family="monospace" font-size="10.00" fill="#000000">stats/reads/fastqc/trim/{sample}_{library}_{lane}_{read_type_trim,R1|singleton|R2|collapsed|collapsedtrunc}.html</text>
+<text text-anchor="start" x="565.5" y="-1008" font-family="monospace" font-size="10.00" fill="#000000">stats/reads/fastqc/trim/{sample}_{library}_{lane}_{read_type_trim,R1|singleton|R2|collapsed|collapsedtrunc}_fastqc.zip</text>
 <polygon fill="#57d998" stroke="#57d998" points="559.5,-1100 559.5,-1100 1281.5,-1100 1281.5,-1100 559.5,-1100"/>
 <polygon fill="#57d998" stroke="#57d998" points="559.5,-1060 559.5,-1060 1281.5,-1060 1281.5,-1060 559.5,-1060"/>
 <polygon fill="none" stroke="#57d998" stroke-width="2" points="559,-999 559,-1129 1280,-1129 1280,-999 559,-999"/>
@@ -193,7 +193,7 @@
 <polygon fill="#c0c0c0" stroke="#c0c0c0" stroke-width="2" points="854.82,-1139.8337 858.991,-1130.0944 849.6569,-1135.1069 854.82,-1139.8337"/>
 </g>
 <!-- 5&#45;&gt;1 -->
-<g id="edge3" class="edge">
+<g id="edge4" class="edge">
 <title>5&#45;&gt;1</title>
 <path fill="none" stroke="#c0c0c0" stroke-width="2" d="M889.4586,-997.9089C885.7328,-989.7121 881.7491,-980.9481 877.5601,-971.7323"/>
 <polygon fill="#c0c0c0" stroke="#c0c0c0" stroke-width="2" points="880.629,-970.0255 873.3046,-962.3702 874.2564,-972.9222 880.629,-970.0255"/>

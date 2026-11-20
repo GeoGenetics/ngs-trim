@@ -75,7 +75,7 @@ if config["trim"]["tool"] == "cutadapt":
             extra=lambda w: config["trim"]["params"]
             + (" -a {} -A {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
         wrapper:
-            "v9.4.2/bio/cutadapt/pe"
+            "v9.19.4/bio/cutadapt/pe"
 
     rule cutadapt_fastq_se:
         input:
@@ -100,7 +100,7 @@ if config["trim"]["tool"] == "cutadapt":
             extra=lambda w: config["trim"]["params"]
             + (" -a {} ".format(*get_adapters(w)) if get_adapters(w) else " "),
         wrapper:
-            "v9.4.2/bio/cutadapt/se"
+            "v9.19.4/bio/cutadapt/se"
 
 elif config["trim"]["tool"] == "adapterremoval":
 
@@ -201,7 +201,7 @@ elif config["trim"]["tool"] == "fastp":
             )
             + (config["collapse"]["params"] if is_activated("collapse") else " "),
         wrapper:
-            "v9.14.0/bio/fastp"
+            "v9.19.1/bio/fastp"
 
     use rule fastp_fastq_pe as fastp_fastq_se with:
         output:
@@ -261,7 +261,7 @@ elif config["trim"]["tool"] == "trimmomatic":
                 config["trim"]["params"].format(ADAPTER_FASTA=input.adapt)
             ],
         wrapper:
-            "v9.15.0/bio/trimmomatic"
+            "v9.19.3/bio/trimmomatic"
 
     rule trimmomatic_fastq_se:
         input:
@@ -289,7 +289,7 @@ elif config["trim"]["tool"] == "trimmomatic":
                 config["trim"]["params"].format(ADAPTER_FASTA=input.adapt)
             ],
         wrapper:
-            "v9.15.0/bio/trimmomatic"
+            "v9.19.3/bio/trimmomatic"
 
 elif config["trim"]["tool"] == "bbduk":
 
@@ -323,7 +323,7 @@ elif config["trim"]["tool"] == "bbduk":
             extra=lambda w: config["trim"]["params"]
             + (" literal={},{} ".format(*get_adapters(w)) if get_adapters(w) else " "),
         wrapper:
-            "v9.16.0/bio/bbtools"
+            "v9.19.3/bio/bbtools"
 
     use rule bbduk_fastq_pe as bbduk_fastq_se with:
         output:
