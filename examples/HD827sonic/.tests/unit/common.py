@@ -1,10 +1,11 @@
 """
-Common code for unit testing of rules generated with Snakemake 9.16.4.dev3.
+Common code for unit testing of rules generated with Snakemake 9.27.1.
 """
 
 import os
+import pytest
 from pathlib import Path
-from subprocess import check_output, PIPE
+from subprocess import check_output, CalledProcessError, STDOUT
 
 
 cmp_cmds = {
@@ -20,7 +21,7 @@ class OutputChecker:
         self.expected_path = expected_path
         self.workdir = workdir
 
-    def check(self, cmp_cmds=cmp_cmds):
+    def check(self, cmp_cmds = cmp_cmds):
         # Input files
         input_files = set(
             (Path(path) / f).relative_to(self.data_path)
@@ -53,8 +54,15 @@ class OutputChecker:
             self.compare_files(self.expected_path / f, self.workdir / f, cmp_cmds)
 
     def compare_files(self, expected_file, generated_file, cmp_cmds):
-        check_output(
-            cmp_cmds.get(expected_file.suffix, ["cmp"])
-            + [expected_file, generated_file],
-            stderr=PIPE,
-        )
+        try:
+            check_output(
+                cmp_cmds.get(expected_file.suffix, ["cmp"])
+                + [expected_file, generated_file],
+                stderr=STDOUT,
+                text=True,
+            )
+        except CalledProcessError as e:
+            pytest.fail(
+                f"{expected_file} differs:\n\n{e.output}",
+                pytrace=False,
+            )
